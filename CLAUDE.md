@@ -205,21 +205,31 @@ Copiadas de estos repos (ver `.claude/skills/SOURCES.md`):
 
 Nota: aunque caveman esté activo, las explicaciones a Joaquín siguen siendo en castellano claro (ver abajo).
 
+## Notas de implementación
+
+- Datos: `lib/catalogo.ts` trae las 4 tablas de una vez (cache 10 min) y arma las relaciones en código.
+- En las variantes, `"Default"` en memoria/color significa "no aplica" y no se muestra como opción.
+- Categorías con una sola marca (laptops, smartwatches, audio) saltan directo del Vestíbulo al Estante.
+- La intro del hero se ve una vez por sesión del navegador; con `prefers-reduced-motion` se saltea.
+- Supabase pausa el proyecto gratis si no se usa: si el sitio no trae datos, revisar que esté activo.
+
 ## Pendientes
 
-- [ ] Setup inicial del proyecto (en progreso)
-- [ ] Hero cinematográfico (4 fases)
-- [ ] Glitch RGB en CLUBTECH flotante
-- [ ] Nivel 1 Vestíbulo con 7 cards
-- [ ] Nivel 2 Sala de Marcas
-- [ ] Nivel 3 Estante
-- [ ] Nivel 4 Vitrina del Producto
-- [ ] SVG fallbacks por categoría (mientras no hay fotos)
+- [x] Setup inicial del proyecto
+- [x] Hero cinematográfico (4 fases)
+- [x] Glitch RGB en CLUBTECH flotante
+- [x] Nivel 1 Vestíbulo con 7 cards
+- [x] Nivel 2 Sala de Marcas
+- [x] Nivel 3 Estante
+- [x] Nivel 4 Vitrina del Producto
+- [x] SVG fallbacks por categoría (mientras no hay fotos)
 - [ ] Decidir tipografía final (4 combos en evaluación)
 - [ ] Micro-interacciones custom
-- [ ] Easter egg
+- [x] Easter egg (tipear "clubh" en cualquier página)
 - [ ] Fotos de productos (upload manual a bucket productos cuando estén)
-- [ ] Compra por WhatsApp (CTA primary)
+- [x] Compra por WhatsApp (CTA primary)
+- [ ] Cargar `NEXT_PUBLIC_WHATSAPP_NUMBER` (número de Clubtech) en `.env.local` y en Vercel
+- [ ] Subir logos a `/public/brand/` (`logo-tipografico.jpeg`, `logo-isotipo.jpeg`); mientras tanto se ve un reemplazo tipográfico
 - [ ] Testing en mobile real
 - [ ] Lighthouse Performance 90+
 - [ ] Deploy a Vercel con dominio clubtech.ar
