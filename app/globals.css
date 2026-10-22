@@ -1,0 +1,115 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* BASE */
+  --black: #000000;
+  --white: #FFFFFF;
+  --off-white: #F2F2F2;
+  --grey-dim: #666666;
+  --line: rgba(255, 255, 255, 0.08);
+
+  /* ZONAS AZULES (atmósferas por sección) */
+  --blue-void: #000818;
+  --blue-deep: #001E52;
+  --blue-tech: #0040F0;
+  --blue-glow: #1E7FFF;
+  --blue-ice: #A8D4FF;
+
+  /* la zona actual la define cada página (ver <Zone>) */
+  --zone-bg: var(--black);
+  --zone-accent: var(--blue-glow);
+}
+
+html {
+  background: var(--black);
+  color: var(--off-white);
+  color-scheme: dark;
+}
+
+body {
+  background: var(--zone-bg);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: var(--blue-tech);
+  color: var(--white);
+}
+
+:focus-visible {
+  outline: 1px solid var(--blue-glow);
+  outline-offset: 3px;
+}
+
+/* Lenis */
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-stopped { overflow: hidden; }
+
+/* ---------- CLUBTECH flotante: cada letra respira a su ritmo ---------- */
+@keyframes float-letter {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
+@keyframes float-letter-alt {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(3px); }
+}
+
+/* ---------- Glitch RGB: aberración cromática, sin deformar letras ---------- */
+.glitch { position: relative; display: inline-block; }
+.glitch__layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  transition: transform 300ms cubic-bezier(0.22, 1, 0.36, 1), opacity 300ms;
+}
+.glitch__layer--r { color: #ff2a3d; transform: translateX(-1px); opacity: 0.55; }
+.glitch__layer--c { color: #2af0ff; transform: translateX(1px); opacity: 0.55; }
+
+@keyframes glitch-r {
+  0%, 100% { transform: translateX(-3px); }
+  25% { transform: translate(-2px, 1px); }
+  50% { transform: translateX(-3px); }
+  75% { transform: translate(-1px, -1px); }
+}
+@keyframes glitch-c {
+  0%, 100% { transform: translateX(3px); }
+  25% { transform: translate(2px, -1px); }
+  50% { transform: translateX(3px); }
+  75% { transform: translate(1px, 1px); }
+}
+.glitch:hover .glitch__layer { opacity: 0.85; }
+.glitch:hover .glitch__layer--r { animation: glitch-r 400ms steps(4, end) infinite; }
+.glitch:hover .glitch__layer--c { animation: glitch-c 400ms steps(4, end) infinite; }
+
+/* grano de película muy sutil sobre todo el sitio */
+.grain::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 60;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+  .glitch:hover .glitch__layer { animation: none !important; }
+}
+
+/* el producto "flota" en su card, como sobre un pedestal */
+@keyframes float-glyph {
+  0%, 100% { transform: translateY(0) rotate(-1.5deg); }
+  50% { transform: translateY(-8px) rotate(1deg); }
+}
+.float-glyph { animation: float-glyph 6.5s ease-in-out infinite; }
