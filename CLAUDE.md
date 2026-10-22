@@ -1,0 +1,233 @@
+# CLAUDE.md · Clubtech Store
+
+Este archivo lo lee Claude Code automáticamente al abrir el proyecto. Contiene todo el contexto que necesita para no preguntar lo mismo cada vez.
+
+## El proyecto
+
+Clubtech Store es un e-commerce premium de tecnología para Argentina. Venden celulares, tablets, laptops, smartwatches, consolas, audio y accesorios. Público: compradores argentinos de tech que valoran lo premium.
+
+**Target emocional:** que al entrar al sitio, el usuario sienta que compra tecnología en un showroom, no en MercadoLibre.
+
+## Decisiones estéticas tomadas (NO negociar)
+
+- Minimalismo radical. Pocos colores, mucho contraste, mucho vacío. Nada de clutter.
+- Dark cinematográfico inspirado en @ubernatural.io (Dubai, Awwwards winners).
+- Paleta: solo negro + blanco + variaciones de azul tech por zonas.
+- Referencias concretas: ubernatural.io, basement.studio, rauno.me, linear.app.
+- NO queremos ningún AI-feel. Ver sección "Lo que NO hacemos" al final.
+
+## Stack técnico
+
+- Next.js 14 (App Router) + TypeScript + Tailwind CSS
+- Framer Motion (animaciones)
+- Lenis (smooth scroll)
+- GSAP (type-on del hero)
+- @supabase/supabase-js (DB + storage)
+- react-type-animation (type-on con error humano)
+- Zustand (estado global)
+- Deploy: Vercel conectado a GitHub
+
+## Paleta de colores (CSS variables en `/app/globals.css`)
+
+```css
+:root {
+  /* BASE */
+  --black: #000000;
+  --white: #FFFFFF;
+  --off-white: #F2F2F2;
+  --grey-dim: #666666;
+  --line: rgba(255,255,255,0.08);
+
+  /* ZONAS AZULES (atmósferas por sección) */
+  --blue-void: #000818;  /* azul noche profundo (zonas quietas) */
+  --blue-deep: #001E52;  /* azul profundo (zonas de énfasis) */
+  --blue-tech: #0040F0;  /* azul eléctrico primary (acento del logo) */
+  --blue-glow: #1E7FFF;  /* glow / hovers interactivos */
+  --blue-ice:  #A8D4FF;  /* highlights sutiles */
+}
+```
+
+### Cómo aplicar los azules por zona
+
+| Zona | Fondo | Acento |
+|---|---|---|
+| Hero home | `--black` | `--blue-tech` (en "STORE" + CTAs) |
+| Vestíbulo (nivel 1) | `--black` | `--blue-glow` (hover de cards) |
+| Celulares (nivel 2) | `--blue-void` | `--blue-glow` |
+| Tablets | `--black` | `--blue-ice` |
+| Laptops | `--blue-deep` | `--white` |
+| Consolas | `--black` | `--blue-tech` |
+| Vitrina producto | `--black` + glow sutil | `--blue-glow` |
+| Nav bar | `--black` 95% + blur | `--blue-tech` (hover) |
+
+## Tipografía
+
+**ESTADO ACTUAL:** Inter de Google Fonts (placeholder temporal).
+**TODO:** cambiar tipografía final cuando se decida. Opciones en evaluación:
+
+- Combo 1 · Bricolage Grotesque + Mona Sans + Instrument Serif + Geist Mono
+- Combo 2 · Geist (todo) + Instrument Serif
+- Combo 3 · Big Shoulders + Figtree + Reddit Sans + Geist Mono
+- Combo 4 · Archivo Black + Inter + Instrument Serif + JetBrains Mono
+
+NO usar Space Grotesk + Fraunces (es la pairing AI-default más obvia).
+
+## Supabase
+
+- Project: `wfazriudzybknzcjplob` (región sa-east-1)
+- URL: https://wfazriudzybknzcjplob.supabase.co
+- Credenciales: en `.env.local` (`NEXT_PUBLIC_SUPABASE_URL` + `NEXT_PUBLIC_SUPABASE_ANON_KEY`). `.env.local` está en `.gitignore`: nunca commitearlo.
+
+### Schema (YA creado, solo consultar)
+
+- `categorias` (7): id, slug, nombre, descripcion, orden, hero_product_slug
+- `marcas` (7): id, slug, nombre, color_hex, grad_from, grad_via, grad_to, glow, logo_label
+- `productos` (61): id, slug, nombre, marca_id, categoria_id, tagline, descripcion, destacado, hero_producto, orden, image_url
+- `variantes` (133): id, producto_id, memoria, color, color_hex, stock, precio_usd
+
+Row Level Security activado con lectura pública. Solo select queries.
+
+### Storage buckets
+
+- `productos` (público) → fotos de productos cuando se suban
+- `brand` (público) → logo tipográfico + isotipo
+
+### Categorías disponibles
+
+celulares, tablets, laptops, smartwatches, consolas, audio, accesorios
+
+### Marcas disponibles
+
+apple, samsung, xiaomi, motorola, sony (PlayStation), nintendo, microsoft (Xbox)
+
+## Estructura del sitio (4 niveles + hero)
+
+### Hero home · Intro cinematográfica (al cargar)
+
+4 fases obligatorias sin skip:
+
+- **Fase 1 (0-4s):** type-on "CLUBTECH" con error humano (tipea CLUBH, borra H, sigue CLUBTECH). Font display 160px desktop.
+- **Fase 2 (4-6s):** aparece logo tipográfico real (archivo en `/public/brand/logo-tipografico.jpeg`), zoom in de scale 1 → 8.
+- **Fase 3 (6-7s):** zoom out scale 8 → 1, logo queda en nav bar como isotipo (`/public/brand/logo-isotipo.jpeg`), 32px.
+- **Fase 4 (permanente):** "CLUBTECH" flotante en hero home, cada letra con loop sutil translateY ±3px asíncrono. Debajo: "— TU PRÓXIMA PIEZA DE TECNOLOGÍA EMPIEZA ACÁ" en mono, con "STORE · ARGENTINA" + "STORE" en `--blue-tech`.
+
+### Micro-interacción pendiente: Glitch RGB sutil
+
+En CLUBTECH flotante, al hover:
+
+- RGB chromatic aberration sutil (3 copias superpuestas: blanca + roja offset -1px + cyan offset +1px)
+- En hover el offset se intensifica a -3px/+3px con loop keyframe 400ms
+- Nunca distorsionar las letras (no clip-path, no scramble)
+- Debe sentirse ELEGANTE, no caótico
+- Respetar `prefers-reduced-motion`
+
+### Nivel 1 · El Vestíbulo (`/`)
+
+Grid asimétrico de 7 cards grandes, una por categoría. Cada card:
+
+- Nombre categoría en display bold uppercase
+- Producto hero flotando (foto o SVG fallback)
+- Contador de productos en mono
+- Hover: card crece 1.02x, border se ilumina `--blue-glow`
+
+Grid NO uniforme: Celulares más grande, 2 cards segunda fila, 3 tercera fila.
+
+### Nivel 2 · La Sala de Marcas (`/catalogo/[categoria]`)
+
+Galería horizontal de marcas con productos en esa categoría. Cada card de marca con atmósfera distinta según zona.
+
+### Nivel 3 · El Estante (`/catalogo/[categoria]/[marca]`)
+
+Grilla densa 3 columnas desktop / 2 mobile. Cards con foto + nombre + precio menor variante. Filtros chip arriba: memoria, color, precio.
+
+### Nivel 4 · La Vitrina del Producto (`/producto/[slug]`)
+
+Fullscreen cinematográfico. Texto editorial izquierda, producto derecha con tilt 3D al mouse (CSS perspective + rotateY/rotateX ±5-8deg). Selector de variantes (memoria + color pills). CTA primary: "Comprar por WhatsApp" (abre WhatsApp con mensaje precargado).
+
+## Reglas de código
+
+### Siempre
+
+- Server Components por default (reducir JS bundle)
+- `next/image` con `priority` solo en producto hero visible
+- Lazy loading con Intersection Observer para secciones no visibles
+- Animaciones solo con `transform` y `opacity` (nunca top, margin, padding)
+- `will-change` solo durante animaciones, removerlo al terminar
+- Lenis con `wheelMultiplier: 0.8`, `smoothTouch: false`
+- Mobile-first responsive
+- Keyboard navigation (arrows ← → donde aplica)
+- `prefers-reduced-motion` respetado
+
+### Nunca
+
+- Iconos de Lucide/Heroicons/Feather (son firma AI). Usar SVG custom cuando se necesite ícono.
+- `rounded-lg` o border-radius uniforme en TODO. Variar o eliminar.
+- Gradients tipo "purple → blue" o "from-cyan-500 to-blue-500".
+- Imágenes stock de Unsplash obvias (mujer con laptop, escritorio con planta).
+- Copy genérico "Transform your business" / "Empower your team".
+- fade-in on scroll genérico en todo (es cliché AI).
+- Nav bar fija translúcida con backdrop-blur igual a todas las webs AI.
+- Tipografía Space Grotesk + Fraunces (pairing AI-default).
+
+## Lo que NO hacemos (anti-AI-made)
+
+Antes de dar algo por terminado, pasar la checklist:
+
+- [ ] ¿Tiene un elemento que NO vi en otro sitio?
+- [ ] ¿La paleta NO es cream+terracotta ni dark+green ni purple+blue?
+- [ ] ¿La tipografía NO es solo Inter o Space Grotesk?
+- [ ] ¿Hay algo asimétrico intencional?
+- [ ] ¿Hay fotos reales del cliente, no stock?
+- [ ] ¿El copy tiene jerga/voz específica del rubro?
+- [ ] ¿Hay al menos 1 micro-interacción que haga sonreír?
+- [ ] ¿El border-radius NO es el mismo en todos los elementos?
+- [ ] ¿Hay algún "easter egg" descubrible?
+- [ ] ¿Qué pensaría ubernatural si lo viera?
+
+Si no cumple 7/10, iterar antes de deploy.
+
+## Deploy
+
+- Repo en GitHub: `alfonalmirantebrown-ctrl/clubtech-store`
+- Vercel conectado al repo: deploy automático en cada push a `main`
+- Dominio final: clubtech.ar (pendiente de configurar en Vercel)
+
+## Skills instaladas (`.claude/skills/`)
+
+Copiadas de estos repos (ver `.claude/skills/SOURCES.md`):
+
+- **vercel-labs/skills** → `find-skills` (buscar e instalar más skills)
+- **emilkowalski/skills** → animación y design engineering: `animate`, `improve-animations`, `review-animations`, `animation-performance`, `animation-vocabulary`, `find-animation-opportunities`, `emil-design-eng`, `apple-design`, `break-ui`, `prototype`, `pick-ui-library`, etc. Usarlas para el hero, el glitch RGB y las micro-interacciones.
+- **JuliusBrussee/caveman** → modo respuestas cortas (`/caveman`, se apaga con "stop caveman") y flujos de trabajo: `investigate-first`, `surgical-patch`, `safe-refactor`, `verify-and-stop`, `lean-build`, etc.
+
+Nota: aunque caveman esté activo, las explicaciones a Joaquín siguen siendo en castellano claro (ver abajo).
+
+## Pendientes
+
+- [ ] Setup inicial del proyecto (en progreso)
+- [ ] Hero cinematográfico (4 fases)
+- [ ] Glitch RGB en CLUBTECH flotante
+- [ ] Nivel 1 Vestíbulo con 7 cards
+- [ ] Nivel 2 Sala de Marcas
+- [ ] Nivel 3 Estante
+- [ ] Nivel 4 Vitrina del Producto
+- [ ] SVG fallbacks por categoría (mientras no hay fotos)
+- [ ] Decidir tipografía final (4 combos en evaluación)
+- [ ] Micro-interacciones custom
+- [ ] Easter egg
+- [ ] Fotos de productos (upload manual a bucket productos cuando estén)
+- [ ] Compra por WhatsApp (CTA primary)
+- [ ] Testing en mobile real
+- [ ] Lighthouse Performance 90+
+- [ ] Deploy a Vercel con dominio clubtech.ar
+
+## Contexto del dueño
+
+- Nombre: Joaquín
+- Studio: 888 Studio (hace webs premium a pymes LATAM)
+- Clubtech es su cliente, no su propio negocio
+- Trabaja desde ChromeOS (limitado para dev local)
+- Prefiere trabajar en Claude Code dentro de la app desktop (sandbox cloud)
+- No es dev profundo → explicar errores en castellano claro, no asumir conocimiento técnico
+- Rioplatense cercano → tono amable pero directo, no formal
+- Si algo no se puede implementar, decir CLARO qué y por qué, no asumir que lo entiende por default.
