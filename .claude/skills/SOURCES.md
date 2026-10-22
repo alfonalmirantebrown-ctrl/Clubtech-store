@@ -7,3 +7,5 @@ Copiadas el 2026-10-22. Para actualizar, volver a clonar el repo y reemplazar la
 | https://github.com/vercel-labs/skills | a80e4c9 | ver repo | find-skills |
 | https://github.com/emilkowalski/skills | 2d22863 | ver repo | animate, animate-expo, animation-performance, animation-vocabulary, apple-design, ask-sonner, break-ui, emil-design-eng, find-animation-opportunities, improve-animations, mobile-native, pick-ui-library, prototype, review-animations, write-swift |
 | https://github.com/JuliusBrussee/caveman | bad48a0 | MIT | caveman, cavecrew, megacave, ultracave, caveman-* , investigate-first, lean-build, migration, safe-refactor, surgical-patch, verify-and-stop |
+| https://github.com/vercel/next.js (carpeta `skills/`) | 62e889a | MIT | next-bundle-optimizer, next-cache-components-adoption, next-cache-components-optimizer, next-dev-loop, next-partial-prefetching-adoption, next-partial-prefetching-optimizer |
+| https://github.com/nextlevelbuilder/ui-ux-pro-max-skill (carpeta `.claude/skills/`) | 04cfb44 | MIT | ui-ux-pro-max, design, design-system, ui-styling, brand, banner-design, slides |

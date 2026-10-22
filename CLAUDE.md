@@ -200,6 +200,9 @@ Copiadas de estos repos (ver `.claude/skills/SOURCES.md`):
 - **emilkowalski/skills** → animación y design engineering: `animate`, `improve-animations`, `review-animations`, `animation-performance`, `animation-vocabulary`, `find-animation-opportunities`, `emil-design-eng`, `apple-design`, `break-ui`, `prototype`, `pick-ui-library`, etc. Usarlas para el hero, el glitch RGB y las micro-interacciones.
 - **JuliusBrussee/caveman** → modo respuestas cortas (`/caveman`, se apaga con "stop caveman") y flujos de trabajo: `investigate-first`, `surgical-patch`, `safe-refactor`, `verify-and-stop`, `lean-build`, etc.
 
+- **vercel/next.js** → skills oficiales de Next.js: `next-dev-loop`, `next-bundle-optimizer`, `next-cache-components-*`, `next-partial-prefetching-*`. Ojo: las de cache components y partial prefetching son para Next 15/16; con Next 14 no aplican hasta que actualicemos.
+- **nextlevelbuilder/ui-ux-pro-max-skill** → `ui-ux-pro-max` (base de estilos, paletas, tipografías y reglas UX), `design`, `design-system`, `ui-styling`, `brand`, `banner-design`, `slides`. Sus sugerencias NO pisan las decisiones estéticas de este archivo: si proponen otra paleta, tipografía, shadcn/ui, íconos Lucide o fotos stock (Pexels), gana CLAUDE.md.
+
 Nota: aunque caveman esté activo, las explicaciones a Joaquín siguen siendo en castellano claro (ver abajo).
 
 ## Pendientes
