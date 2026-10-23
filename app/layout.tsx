@@ -21,7 +21,7 @@ const sans = localFont({ src: './fonts/MonaSans-wght.woff2', weight: '200 900', 
 
 export const metadata: Metadata = {
   title: { default: 'Clubtech Store · Tecnología premium en Argentina', template: '%s · Clubtech Store' },
-  description: 'Celulares, tablets, laptops, consolas, audio y accesorios. Elegí tu próxima pieza y comprala por WhatsApp.',
+  description: 'Celulares, tablets, laptops, consolas, audio y accesorios. Elegí tu próximo celular y compralo por WhatsApp.',
 };
 
 export const viewport: Viewport = { themeColor: '#000000' };

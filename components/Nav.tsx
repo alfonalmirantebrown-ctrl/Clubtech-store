@@ -8,13 +8,13 @@ import { linkWhatsApp } from '@/lib/whatsapp';
 import { Isotipo } from './Logo';
 import Sonido from './Sonido';
 
-// Coordenadas de dónde estás en el showroom, no un menú.
+// Dónde estás, en una línea: sección + detalle.
 function ubicacion(path: string) {
   const partes = path.split('/').filter(Boolean);
-  if (partes[0] === 'catalogo' && partes.length === 2) return ['N.02', 'Sala', partes[1]];
-  if (partes[0] === 'catalogo' && partes.length === 3) return ['N.03', 'Estante', `${partes[1]} / ${partes[2]}`];
-  if (partes[0] === 'producto') return ['N.04', 'Vitrina', partes[1]?.replace(/-/g, ' ')];
-  return ['N.01', 'Vestíbulo', 'Planta baja'];
+  if (partes[0] === 'catalogo' && partes.length === 2) return ['Catálogo', partes[1], ''];
+  if (partes[0] === 'catalogo' && partes.length === 3) return ['Catálogo', partes[1], partes[2]];
+  if (partes[0] === 'producto') return ['Modelo', partes[1]?.replace(/-/g, ' '), ''];
+  return ['Clubtech', 'Store', 'Argentina'];
 }
 
 function Reloj() {
@@ -44,7 +44,7 @@ export default function Nav() {
   return (
     <header className="fixed inset-x-0 top-0 z-50 border-b border-line bg-black/95 backdrop-blur-sm">
       <nav className="mx-auto flex h-14 max-w-[1600px] items-center gap-6 px-5 md:px-8" aria-label="Principal">
-        <Link href="/" className="group flex items-center gap-3" aria-label="Clubtech, volver al vestíbulo">
+        <Link href="/" className="group flex items-center gap-3" aria-label="Clubtech, volver al inicio">
           <span id="nav-isotipo-slot" className="block h-8 w-8">
             <span className={`block transition-opacity duration-300 ${mostrarIsotipo ? 'opacity-100' : 'opacity-0'}`}>
               <Isotipo size={32} />
@@ -55,7 +55,7 @@ export default function Nav() {
         <div className="flex min-w-0 items-baseline gap-3 font-mono text-[11px] uppercase tracking-[0.14em]">
           <span className="text-blue-tech">{nivel}</span>
           <span className="text-off-white">{sala}</span>
-          <span className="hidden truncate text-grey-dim sm:inline">— {detalle}</span>
+          {detalle && <span className="hidden truncate text-grey-dim sm:inline">— {detalle}</span>}
         </div>
 
         <div className="ml-auto flex items-center gap-6 font-mono text-[11px] uppercase tracking-[0.14em]">

@@ -35,7 +35,7 @@ export default async function ProductoPage({ params }: Params) {
         <section className="border-t border-line px-5 pb-24 pt-14 md:px-8">
           <div className="mx-auto max-w-[1600px]">
             <div className="mb-6 flex items-baseline justify-between font-mono text-[11px] uppercase tracking-[0.14em]">
-              <h2 className="text-off-white">En la misma sala</h2>
+              <h2 className="text-off-white">También en {producto.categoria.nombre.toLowerCase()}</h2>
               <Link href={`/catalogo/${producto.categoria.slug}`} className="text-grey-dim hover:text-off-white">
                 Ver {producto.categoria.nombre} →
               </Link>

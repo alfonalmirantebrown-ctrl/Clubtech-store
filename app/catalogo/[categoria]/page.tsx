@@ -36,7 +36,7 @@ export default async function SalaDeMarcas({ params }: { params: { categoria: st
         <div className="flex flex-col justify-end gap-2 font-mono text-[11px] uppercase tracking-[0.14em] md:col-span-3 md:pb-3 md:text-right">
           <p className="text-off-white">{categoria.descripcion}</p>
           <p className="text-grey-dim">
-            {marcas.length} marcas · {piezas} piezas
+            {marcas.length} marcas · {piezas} modelos
           </p>
         </div>
       </header>

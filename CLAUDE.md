@@ -62,7 +62,7 @@ Clubtech Store es un e-commerce premium de tecnología para Argentina. Venden ce
 
 ## Tipografía
 
-**DECIDIDO: Combo 1.**
+**EN REVISIÓN:** a Joaquín no le gustó el Combo 1. Se le mostró un muestrario con 4 direcciones (A Geist + Geist Mono · B Big Shoulders + Figtree · C Archivo Expanded + Inter Tight · D Unbounded + Manrope); falta que elija. Hasta entonces sigue el Combo 1.
 
 - Display (titulares, CLUBTECH, categorías, marcas, modelos, precio): **Bricolage Grotesque**, clase `font-display`, condensada al 86% (`font-stretch`) y con tracking -0.02/-0.03em
 - Acento editorial (taglines, frases en cursiva): **Instrument Serif** italic, clase `font-serif`
@@ -133,10 +133,12 @@ Narrativa scroll de 5 actos dentro de un escenario fijo (`components/showroom/`)
 
 - **Pieza central 3D** (`Escena3D.tsx`): celular hecho con geometría propia en React Three Fiber (sin modelos descargados), marco metálico, dorso de vidrio, 3 lentes, pantalla de bloqueo con la hora real de Buenos Aires. Estudio de luces con `Lightformer` (sin HDR externo). Polvo en el aire que se junta donde está el mouse.
 - **Aura**: rayos de luz CSS (`.aura-rayos`) que siguen a la pieza; más intensos de noche (hora real de BA).
-- **Acto 0** · llegada: pregunta-gancho en serif ("¿Y si comprar un celular se sintiera como entrar a un museo a las 3 de la mañana?"), CLUBTECH gigante detrás de la pieza, placa de museo "Pieza 001" con el producto héroe de Celulares y su precio real.
-- **Acto I** · "Mirala de cerca": la pieza gira y muestra la cámara.
-- **Acto II** · "El color lo elegís vos": recorre los colores reales del producto (de `variantes`).
-- **Acto III** · números reales (piezas, salas, marcas) que cuentan con el scroll.
+- **NO usar lenguaje de museo en la web** (decisión de Joaquín): nada de "salas", "piezas", "exhibición", "vitrina", "vestíbulo" ni datos tipo "Salas 07 / Piezas 61 / Moneda USD" de cara al visitante. Los nombres internos del código (Vestibulo, Estante, Vitrina) pueden quedar.
+- **01** · llegada: frase en serif ("Lo último en celulares, tablets y consolas. Precio en dólares, sin vueltas."), CLUBTECH gigante detrás del celular, etiqueta "Destacado" con el producto héroe de Celulares y su precio real.
+- **01 — Cámara** · "Mirala de cerca": el celular gira y muestra la cámara.
+- **02 — Color** · "El color lo elegís vos": recorre los colores reales del producto (de `variantes`).
+- **03 — Catálogo** · "No solo celulares.": pase al catálogo de categorías.
+- **Pendiente**: el celular del hero tiene que ser un **modelo 3D real** (.glb). Hoy es geometría propia provisoria. Los productos a la venta pueden ser fotos 2D.
 - Después: Vestíbulo y **Cierre** ("Sin carrito. Sin formulario. Un mensaje y listo." + botón magnético a WhatsApp).
 - **Sonido ambiente** opcional (botón en la nav), sintetizado con WebAudio; arranca apagado.
 - Coreografía del celular según el scroll: `lib/escena.ts` (`pose`). Scroll: GSAP ScrollTrigger + Lenis en el mismo ticker (`components/SmoothScroll.tsx`).

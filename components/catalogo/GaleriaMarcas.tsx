@@ -58,7 +58,7 @@ export default function GaleriaMarcas({ categoria, items }: { categoria: string;
           >
             <div className="flex justify-between font-mono text-[11px] uppercase tracking-[0.14em] text-grey-dim">
               <span>{String(i + 1).padStart(2, '0')} / {String(items.length).padStart(2, '0')}</span>
-              <span>{String(piezas).padStart(2, '0')} {piezas === 1 ? 'pieza' : 'piezas'}</span>
+              <span>{String(piezas).padStart(2, '0')} {piezas === 1 ? 'modelo' : 'modelos'}</span>
             </div>
 
             <div aria-hidden className="pointer-events-none absolute inset-x-0 top-[16%] mx-auto w-[58%] transition-transform duration-700 ease-out group-hover:-translate-y-2 group-hover:scale-[1.04]">

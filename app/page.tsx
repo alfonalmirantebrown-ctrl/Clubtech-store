@@ -9,7 +9,7 @@ import { esOpcion } from '@/lib/variantes';
 export const revalidate = 600;
 
 export default async function Home() {
-  const { categorias, marcas, productos } = await getCatalogo();
+  const { categorias, productos } = await getCatalogo();
   const salas = categorias.map((categoria) => {
     const items = productos.filter((p) => p.categoria_id === categoria.id);
     const precios = items.map((p) => p.precioDesde).filter((x): x is number => x != null);
@@ -42,7 +42,6 @@ export default async function Home() {
           colores: colores.length ? colores : [{ color: 'Silver', hex: '#C0C0C8', desde: null }],
           desde: pieza?.precioDesde ?? null,
         }}
-        numeros={{ piezas: productos.length, salas: categorias.length, marcas: marcas.length }}
       />
       <Vestibulo salas={salas} />
       <Cierre />

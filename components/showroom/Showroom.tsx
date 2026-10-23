@@ -20,7 +20,6 @@ const Escena3D = dynamic(() => import('./Escena3D'), { ssr: false });
 
 type Props = {
   pieza: { nombre: string; slug: string; colores: ColorPieza[]; desde: number | null };
-  numeros: { piezas: number; salas: number; marcas: number };
 };
 
 const ACTOS = { color: [0.45, 0.8] as const };
@@ -34,7 +33,7 @@ function soportaWebGL() {
   }
 }
 
-export default function Showroom({ pieza, numeros }: Props) {
+export default function Showroom({ pieza }: Props) {
   const raiz = useRef<HTMLElement>(null);
   const fase = useFaseIntro();
   const [mobile, setMobile] = useState(false);
@@ -81,7 +80,6 @@ export default function Showroom({ pieza, numeros }: Props) {
       if (reducido) return;
       const root = raiz.current!;
       const ancho3d = () => 2 * 5 * Math.tan((15 * Math.PI) / 180) * (window.innerWidth / window.innerHeight);
-      const nums = gsap.utils.toArray<HTMLElement>('[data-num]', root);
 
       const tl = gsap.timeline({
         defaults: { ease: 'none' },
@@ -101,9 +99,6 @@ export default function Showroom({ pieza, numeros }: Props) {
               escena.color = i;
               setColor(i);
             }
-            // contadores del acto III: suben con el scroll
-            const k = gsap.utils.clamp(0, 1, (p - 0.84) / 0.1);
-            nums.forEach((el) => (el.textContent = String(Math.round(Number(el.dataset.num) * k)).padStart(2, '0')));
           },
         },
       });
@@ -175,31 +170,23 @@ export default function Showroom({ pieza, numeros }: Props) {
           <div className="mx-auto flex h-full max-w-[1600px] flex-col">
             <div className="flex items-start justify-between gap-6">
               <p className="max-w-[17ch] font-serif text-[24px] italic leading-[1.05] text-off-white md:text-[34px]">
-                ¿Y si comprar un celular se sintiera como entrar a un museo a las 3 de la mañana?
+                Lo último en celulares, tablets y consolas. Precio en dólares, sin vueltas.
               </p>
-              <dl className="hidden shrink-0 grid-cols-[auto_auto] gap-x-4 gap-y-1 text-right font-mono text-[11px] uppercase tracking-[0.14em] text-grey-dim sm:grid">
-                <dt>Salas</dt>
-                <dd className="text-off-white">{String(numeros.salas).padStart(2, '0')}</dd>
-                <dt>Piezas</dt>
-                <dd className="text-off-white">{String(numeros.piezas).padStart(2, '0')}</dd>
-                <dt>Moneda</dt>
-                <dd className="text-off-white">USD</dd>
-              </dl>
             </div>
 
-            {/* placa de museo junto a la pieza */}
+            {/* etiqueta del producto en el hero */}
             <Link
               href={`/producto/${pieza.slug}`}
               className="group absolute hidden font-mono text-[11px] uppercase leading-relaxed tracking-[0.14em] md:block"
               style={{ left: 'calc(var(--ax) - 26vw)', top: '42%' }}
             >
               <span className="flex items-center gap-3">
-                <span className="text-blue-glow">Pieza 001</span>
+                <span className="text-blue-glow">Destacado</span>
                 <span className="h-px w-16 bg-off-white/30 transition-[width] duration-500 group-hover:w-24" />
               </span>
               <span className="block text-off-white">{pieza.nombre}</span>
               <span className="block text-grey-dim">Desde {formatUSD(pieza.desde)}</span>
-              <span className="mt-1 block text-grey-dim transition-colors group-hover:text-off-white">Verla en vitrina →</span>
+              <span className="mt-1 block text-grey-dim transition-colors group-hover:text-off-white">Ver modelo →</span>
             </Link>
 
             <div className="mt-auto flex flex-col gap-3 pb-8 font-mono text-[11px] uppercase tracking-[0.16em] md:flex-row md:items-end md:justify-between md:pb-10 md:text-[12px]">
@@ -216,7 +203,7 @@ export default function Showroom({ pieza, numeros }: Props) {
             {/* ACTO I · mirala de cerca */}
             <div data-acto="1" className="invisible absolute inset-0 flex items-end px-5 pb-16 md:items-center md:justify-end md:px-8 md:pb-0">
               <div className="max-w-[460px] md:mr-[4vw] md:text-right">
-                <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-blue-glow">Acto I</p>
+                <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-blue-glow">01 — Cámara</p>
                 <h2 className="mt-3 font-display text-[clamp(56px,8vw,128px)] font-extrabold uppercase leading-[0.84] tracking-[-0.03em] text-white">
                   Mirala
                   <span className="block font-serif text-[0.62em] font-normal normal-case italic tracking-[-0.01em] text-off-white">de cerca.</span>
@@ -231,7 +218,7 @@ export default function Showroom({ pieza, numeros }: Props) {
             <div data-acto="2" className="invisible absolute inset-0 flex items-end px-5 pb-16 md:items-center md:px-8 md:pb-0">
               <div className="max-w-[640px]">
                 <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-grey-dim">
-                  Acto II · Color {String(color + 1).padStart(2, '0')}/{String(pieza.colores.length).padStart(2, '0')}
+                  02 — Color {String(color + 1).padStart(2, '0')}/{String(pieza.colores.length).padStart(2, '0')}
                 </p>
                 <h2
                   key={c?.color}
@@ -258,26 +245,15 @@ export default function Showroom({ pieza, numeros }: Props) {
               </div>
             </div>
 
-            {/* ACTO III · los números */}
+            {/* 03 · pase al catálogo */}
             <div data-acto="3" className="invisible absolute inset-0 flex items-center px-5 md:px-8">
               <div className="mx-auto w-full max-w-[1600px]">
-                <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-blue-glow">Acto III</p>
-                <div className="mt-6 grid grid-cols-3 gap-4 md:max-w-[1100px] md:gap-10">
-                  {[
-                    [numeros.piezas, 'piezas'],
-                    [numeros.salas, 'salas'],
-                    [numeros.marcas, 'marcas'],
-                  ].map(([n, l]) => (
-                    <div key={l} className="border-t border-line pt-4">
-                      <p data-num={n} className="font-display text-[clamp(64px,13vw,220px)] font-extrabold leading-[0.8] tracking-[-0.03em] text-white">
-                        00
-                      </p>
-                      <p className="mt-3 font-mono text-[11px] uppercase tracking-[0.16em] text-grey-dim">{l}</p>
-                    </div>
-                  ))}
-                </div>
-                <p className="mt-10 max-w-[30ch] font-serif text-[26px] italic leading-[1.1] text-off-white md:text-[36px]">
-                  Una sola regla: si algo te gusta, <span className="text-blue-glow">escribinos.</span>
+                <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-blue-glow">03 — Catálogo</p>
+                <h2 className="mt-4 max-w-[14ch] font-display text-[clamp(52px,8vw,140px)] font-extrabold uppercase leading-[0.86] tracking-[-0.03em] text-white">
+                  No solo celulares.
+                </h2>
+                <p className="mt-6 max-w-[34ch] font-serif text-[24px] italic leading-[1.15] text-off-white md:text-[32px]">
+                  Tablets, laptops, relojes, consolas, audio y accesorios. Si algo te gusta, <span className="text-blue-glow">escribinos.</span>
                 </p>
               </div>
             </div>

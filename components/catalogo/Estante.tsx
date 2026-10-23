@@ -101,7 +101,7 @@ export default function Estante({ productos }: { productos: ProductoCompleto[] }
 
       <div className="mb-5 flex items-center justify-between font-mono text-[11px] uppercase tracking-[0.14em] text-grey-dim">
         <span aria-live="polite">
-          {String(visibles.length).padStart(2, '0')} / {String(productos.length).padStart(2, '0')} en exhibición
+          {String(visibles.length).padStart(2, '0')} / {String(productos.length).padStart(2, '0')} modelos
         </span>
         {hayFiltros && (
           <button
@@ -126,7 +126,7 @@ export default function Estante({ productos }: { productos: ProductoCompleto[] }
         </div>
       ) : (
         <p className="py-24 text-center font-mono text-[12px] uppercase tracking-[0.14em] text-grey-dim">
-          Nada en el estante con esa combinación. Probá sacando un filtro.
+          No hay modelos con esa combinación. Probá sacando un filtro.
         </p>
       )}
     </>

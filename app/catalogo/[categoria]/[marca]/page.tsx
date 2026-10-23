@@ -34,7 +34,7 @@ export default async function EstantePage({ params }: Params) {
     <main className="min-h-[100svh] px-5 pb-24 pt-28 md:px-8 md:pt-32" style={estiloZona(categoria.slug)}>
       <div className="mx-auto max-w-[1600px]">
         <nav className="mb-6 font-mono text-[11px] uppercase tracking-[0.14em] text-grey-dim" aria-label="Migas">
-          <Link href="/" className="hover:text-off-white">Vestíbulo</Link>
+          <Link href="/" className="hover:text-off-white">Inicio</Link>
           <span className="mx-2">/</span>
           {marcasEnSala > 1 ? (
             <Link href={`/catalogo/${categoria.slug}`} className="hover:text-off-white">{categoria.nombre}</Link>
@@ -53,7 +53,7 @@ export default async function EstantePage({ params }: Params) {
             </span>
           </h1>
           <p className="max-w-[30ch] font-mono text-[11px] uppercase tracking-[0.14em] text-grey-dim md:text-right">
-            Precios en dólares. Tocá una pieza para verla de cerca.
+            Precios en dólares. Tocá un modelo para ver versiones y colores.
           </p>
         </header>
 

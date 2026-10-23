@@ -10,7 +10,7 @@ export default function Footer() {
           <p>Tecnología premium · Argentina</p>
         </div>
         <div className="flex gap-6">
-          <Link href="/" className="hover:text-off-white">Vestíbulo</Link>
+          <Link href="/" className="hover:text-off-white">Inicio</Link>
           <a href={linkWhatsApp('Hola Clubtech!')} target="_blank" rel="noopener noreferrer" className="hover:text-blue-tech">
             WhatsApp ↗
           </a>

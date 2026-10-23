@@ -63,7 +63,7 @@ export default function Cierre() {
 
         <div className="flex flex-col justify-end gap-10 md:col-span-4">
           <ol className="space-y-4 font-mono text-[12px] uppercase tracking-[0.14em]">
-            {['Elegís la pieza', 'Nos escribís por WhatsApp', 'Te confirmamos stock y precio'].map((paso, i) => (
+            {['Elegís el modelo', 'Nos escribís por WhatsApp', 'Te confirmamos stock y precio'].map((paso, i) => (
               <li key={paso} className="flex items-baseline gap-4 border-b border-line pb-4">
                 <span className="text-blue-glow">0{i + 1}</span>
                 <span className="text-off-white">{paso}</span>
@@ -71,7 +71,7 @@ export default function Cierre() {
             ))}
           </ol>
           <div>
-            <BotonMagnetico href={linkWhatsApp('Hola Clubtech! Vi la web y quiero consultar por una pieza.')}>
+            <BotonMagnetico href={linkWhatsApp('Hola Clubtech! Vi la web y quiero consultar por un modelo.')}>
               Escribinos
             </BotonMagnetico>
           </div>

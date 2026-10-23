@@ -40,7 +40,7 @@ function CardSala({ sala, n }: { sala: Sala; n: number }) {
       <div className="flex items-start justify-between font-mono text-[11px] uppercase tracking-[0.14em]">
         <span className="text-grey-dim">N.{String(n).padStart(2, '0')}</span>
         <span className="text-grey-dim transition-colors duration-300 group-hover:text-blue-glow">
-          {String(piezas).padStart(2, '0')} {piezas === 1 ? 'pieza' : 'piezas'}
+          {String(piezas).padStart(2, '0')} {piezas === 1 ? 'modelo' : 'modelos'}
         </span>
       </div>
 
@@ -85,10 +85,10 @@ export default function Vestibulo({ salas }: { salas: Sala[] }) {
     <section id="vestibulo" className="scroll-mt-14 bg-black px-3 pb-24 pt-20 md:px-5 md:pt-28">
       <header className="mx-auto mb-10 flex max-w-[1600px] items-end justify-between gap-6 px-2 md:mb-14">
         <h2 className="max-w-[16ch] font-display text-[clamp(30px,4.4vw,60px)] font-bold leading-[0.95] tracking-[-0.02em] text-white">
-          Siete salas.{' '}
+          Siete categorías.{' '}
           <em className="font-serif font-normal italic tracking-[-0.01em] text-off-white/70">Elegí por dónde arrancar.</em>
         </h2>
-        <p className="hidden font-mono text-[11px] uppercase tracking-[0.14em] text-grey-dim md:block">N.01 — Vestíbulo</p>
+        <p className="hidden font-mono text-[11px] uppercase tracking-[0.14em] text-grey-dim md:block">Catálogo</p>
       </header>
 
       <div className="mx-auto grid max-w-[1600px] grid-cols-1 gap-3 md:grid-cols-12">
