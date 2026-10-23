@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import { useFaseIntro } from '@/lib/intro';
 import { linkWhatsApp } from '@/lib/whatsapp';
 import { Isotipo } from './Logo';
+import Sonido from './Sonido';
 
 // Coordenadas de dónde estás en el showroom, no un menú.
 function ubicacion(path: string) {
@@ -60,6 +61,9 @@ export default function Nav() {
         <div className="ml-auto flex items-center gap-6 font-mono text-[11px] uppercase tracking-[0.14em]">
           <span className="hidden text-grey-dim md:inline">
             <Reloj />
+          </span>
+          <span className="hidden sm:inline">
+            <Sonido />
           </span>
           <a
             href={linkWhatsApp('Hola Clubtech! Estoy mirando la web y tengo una consulta.')}

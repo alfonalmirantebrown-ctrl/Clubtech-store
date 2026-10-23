@@ -127,6 +127,21 @@ En CLUBTECH flotante, al hover:
 - Debe sentirse ELEGANTE, no caótico
 - Respetar `prefers-reduced-motion`
 
+### Showroom nocturno (home, debajo de la intro) — concepto vigente
+
+Narrativa scroll de 5 actos dentro de un escenario fijo (`components/showroom/`), inspirada en la skill `ubernatural-style`:
+
+- **Pieza central 3D** (`Escena3D.tsx`): celular hecho con geometría propia en React Three Fiber (sin modelos descargados), marco metálico, dorso de vidrio, 3 lentes, pantalla de bloqueo con la hora real de Buenos Aires. Estudio de luces con `Lightformer` (sin HDR externo). Polvo en el aire que se junta donde está el mouse.
+- **Aura**: rayos de luz CSS (`.aura-rayos`) que siguen a la pieza; más intensos de noche (hora real de BA).
+- **Acto 0** · llegada: pregunta-gancho en serif ("¿Y si comprar un celular se sintiera como entrar a un museo a las 3 de la mañana?"), CLUBTECH gigante detrás de la pieza, placa de museo "Pieza 001" con el producto héroe de Celulares y su precio real.
+- **Acto I** · "Mirala de cerca": la pieza gira y muestra la cámara.
+- **Acto II** · "El color lo elegís vos": recorre los colores reales del producto (de `variantes`).
+- **Acto III** · números reales (piezas, salas, marcas) que cuentan con el scroll.
+- Después: Vestíbulo y **Cierre** ("Sin carrito. Sin formulario. Un mensaje y listo." + botón magnético a WhatsApp).
+- **Sonido ambiente** opcional (botón en la nav), sintetizado con WebAudio; arranca apagado.
+- Coreografía del celular según el scroll: `lib/escena.ts` (`pose`). Scroll: GSAP ScrollTrigger + Lenis en el mismo ticker (`components/SmoothScroll.tsx`).
+- Fallbacks: sin WebGL → dibujo de línea; `prefers-reduced-motion` → solo el acto 0, sin scroll narrativo.
+
 ### Nivel 1 · El Vestíbulo (`/`)
 
 Grid asimétrico de 7 cards grandes, una por categoría. Cada card:
@@ -213,6 +228,9 @@ Copiadas de estos repos (ver `.claude/skills/SOURCES.md`):
 - **vercel/next.js** → skills oficiales de Next.js: `next-dev-loop`, `next-bundle-optimizer`, `next-cache-components-*`, `next-partial-prefetching-*`. Ojo: las de cache components y partial prefetching son para Next 15/16; con Next 14 no aplican hasta que actualicemos.
 - **nextlevelbuilder/ui-ux-pro-max-skill** → `ui-ux-pro-max` (base de estilos, paletas, tipografías y reglas UX), `design`, `design-system`, `ui-styling`, `brand`, `banner-design`, `slides`. Sus sugerencias NO pisan las decisiones estéticas de este archivo: si proponen otra paleta, tipografía, shadcn/ui, íconos Lucide o fotos stock (Pexels), gana CLAUDE.md.
 
+- **gsap**, **lenis**, **react-bits** → escritas a partir de la documentación oficial de cada repo (ninguno trae `SKILL.md`). React Bits: reactbits.dev no es accesible desde la sandbox; los efectos se escriben a mano inspirados en el catálogo (`references/llms.txt`).
+- **ubernatural-style** → la musa creativa (también está guardada en la cuenta de Claude de Joaquín, para cualquier proyecto).
+
 Nota: aunque caveman esté activo, las explicaciones a Joaquín siguen siendo en castellano claro (ver abajo).
 
 ## Notas de implementación
@@ -236,7 +254,7 @@ Nota: aunque caveman esté activo, las explicaciones a Joaquín siguen siendo en
 - [x] Nivel 4 Vitrina del Producto
 - [x] SVG fallbacks por categoría (mientras no hay fotos)
 - [x] Decidir tipografía final (Combo 1)
-- [ ] Micro-interacciones custom
+- [x] Micro-interacciones custom (showroom 3D, polvo que sigue al mouse, botón magnético, sonido ambiente)
 - [x] Easter egg (tipear "clubh" en cualquier página)
 - [ ] Fotos de productos (upload manual a bucket productos cuando estén)
 - [x] Compra por WhatsApp (CTA primary)
