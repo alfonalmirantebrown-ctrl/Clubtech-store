@@ -195,7 +195,11 @@ Si no cumple 7/10, iterar antes de deploy.
 ## Deploy
 
 - Repo en GitHub: `alfonalmirantebrown-ctrl/clubtech-store`
-- Vercel conectado al repo: deploy automático en cada push a `main`
+- Vercel (plan Hobby, equipo `888-estudio`): proyecto `clubtech-store` (`prj_LrMoSloHVwYMek6FEl67EoBzkDJ1`)
+- Preview online: https://clubtech-store.vercel.app
+- Deploy automático en cada push a la rama de producción, hoy `claude/clubtech-store-setup-h0f3o3` (la principal del repo; no existe `main` todavía)
+- Variables cargadas en Vercel: `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`. Falta `NEXT_PUBLIC_WHATSAPP_NUMBER` (al cargarla hay que redeployar)
+- Antes de vender: pasar a plan Pro o a la cuenta de Vercel del cliente (Hobby no permite uso comercial)
 - Dominio final: clubtech.ar (pendiente de configurar en Vercel)
 
 ## Skills instaladas (`.claude/skills/`)
@@ -240,7 +244,8 @@ Nota: aunque caveman esté activo, las explicaciones a Joaquín siguen siendo en
 - [ ] Subir logos a `/public/brand/` (`logo-tipografico.jpeg`, `logo-isotipo.jpeg`); mientras tanto se ve un reemplazo tipográfico
 - [ ] Testing en mobile real
 - [ ] Lighthouse Performance 90+
-- [ ] Deploy a Vercel con dominio clubtech.ar
+- [x] Deploy a Vercel (preview en clubtech-store.vercel.app)
+- [ ] Conectar dominio clubtech.ar
 
 ## Contexto del dueño
 
