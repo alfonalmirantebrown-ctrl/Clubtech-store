@@ -13,6 +13,8 @@ type Props = {
   className?: string;
   /** muestra el crédito de la foto (solo en la vitrina) */
   credito?: boolean;
+  /** qué mostrar si no hay foto o falla (por defecto, el espacio vacío) */
+  sinFoto?: React.ReactNode;
 };
 
 // Lugar reservado para la foto: marcas de corte como en un set de fotos.
@@ -36,7 +38,7 @@ function EspacioVacio({ nombre, tinte }: { nombre: string; tinte?: string | null
   );
 }
 
-export default function ProductoVisual({ nombre, foto, tinte, priority, sizes = '50vw', className = '', credito }: Props) {
+export default function ProductoVisual({ nombre, foto, tinte, priority, sizes = '50vw', className = '', credito, sinFoto }: Props) {
   const [rota, setRota] = useState(false);
 
   return (
@@ -67,7 +69,7 @@ export default function ProductoVisual({ nombre, foto, tinte, priority, sizes = 
           )}
         </>
       ) : (
-        <EspacioVacio nombre={nombre} tinte={tinte} />
+        sinFoto ?? <EspacioVacio nombre={nombre} tinte={tinte} />
       )}
     </div>
   );

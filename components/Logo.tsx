@@ -48,7 +48,7 @@ export function LogoTipografico({ className = '' }: { className?: string }) {
   const { ref, rota, onError } = useImagenRota();
   if (rota) {
     return (
-      <span className={`whitespace-nowrap font-sans text-[clamp(28px,6vw,72px)] font-extrabold tracking-[-0.04em] text-white ${className}`}>
+      <span className={`whitespace-nowrap font-display text-[clamp(28px,6vw,72px)] font-extrabold tracking-[-0.022em] text-white ${className}`}>
         CLUB<span className="text-blue-tech">TECH</span>
       </span>
     );

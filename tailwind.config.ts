@@ -17,8 +17,10 @@ const config: Config = {
         'blue-ice': 'var(--blue-ice)',
       },
       fontFamily: {
+        display: ['var(--font-display)', 'system-ui', 'sans-serif'],
         sans: ['var(--font-sans)', 'system-ui', 'sans-serif'],
-        mono: ['var(--font-mono)', 'ui-monospace', 'monospace'],
+        serif: ['var(--font-serif)', 'Georgia', 'serif'],
+        mono: ['var(--font-geist-mono)', 'ui-monospace', 'monospace'],
       },
       transitionTimingFunction: {
         // salida rápida y frenado largo: se siente "pesado", como un objeto real

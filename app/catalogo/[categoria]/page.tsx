@@ -30,7 +30,7 @@ export default async function SalaDeMarcas({ params }: { params: { categoria: st
   return (
     <main className="min-h-[100svh] pb-20 pt-28 md:pt-32" style={estiloZona(categoria.slug)}>
       <header className="mx-auto mb-10 grid max-w-[1600px] gap-6 px-5 md:mb-14 md:grid-cols-12 md:px-8">
-        <h1 className="text-[clamp(56px,12vw,200px)] font-extrabold uppercase leading-[0.84] tracking-[-0.055em] text-white md:col-span-9">
+        <h1 className="text-[clamp(56px,12vw,200px)] font-display font-extrabold uppercase leading-[0.84] tracking-[-0.03em] text-white md:col-span-9">
           {categoria.nombre}
         </h1>
         <div className="flex flex-col justify-end gap-2 font-mono text-[11px] uppercase tracking-[0.14em] md:col-span-3 md:pb-3 md:text-right">

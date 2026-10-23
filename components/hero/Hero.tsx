@@ -17,7 +17,7 @@ export default function Hero({ categorias, piezas }: { categorias: number; pieza
       </dl>
 
       <div className="mx-auto w-full max-w-[1600px]">
-        <FloatingWord className="-ml-[0.04em] text-[clamp(64px,17vw,260px)]" />
+        <FloatingWord className="-ml-[0.04em] text-[clamp(72px,24.5vw,380px)]" />
 
         <div className="mt-6 flex flex-col gap-3 font-mono text-[11px] uppercase tracking-[0.16em] md:mt-8 md:flex-row md:items-end md:justify-between md:text-[12px]">
           <p className="max-w-[34ch] text-off-white">— Tu próxima pieza de tecnología empieza acá</p>

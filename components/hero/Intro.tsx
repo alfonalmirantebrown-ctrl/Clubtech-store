@@ -92,7 +92,7 @@ export default function Intro() {
             deletionSpeed={{ type: 'keyStrokeDelayInMs', value: 110 }}
             cursor
             wrapper="span"
-            className="font-sans text-[clamp(56px,13vw,160px)] font-extrabold tracking-[-0.055em] text-white"
+            className="font-display text-[clamp(56px,13vw,160px)] font-extrabold tracking-[-0.03em] text-white"
           />
         </div>
       )}

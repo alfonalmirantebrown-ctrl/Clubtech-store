@@ -67,6 +67,7 @@ export default function GaleriaMarcas({ categoria, items }: { categoria: string;
                   <ProductoVisual
                     nombre={marca.nombre}
                     foto={foto}
+                    sinFoto={<Glyph categoria={categoria} tinte={marca.glow} className="h-auto w-full" />}
                     sizes="(min-width: 768px) 260px, 50vw"
                     className="mx-auto aspect-[4/5] w-[86%] saturate-[0.4] transition-[filter] duration-700 group-hover:saturate-100"
                   />
@@ -84,7 +85,7 @@ export default function GaleriaMarcas({ categoria, items }: { categoria: string;
                 {modelos.length > 3 && <li className="text-grey-dim">+ {modelos.length - 3} más</li>}
               </ul>
               <h2
-                className="font-extrabold uppercase leading-[0.86] tracking-[-0.045em] text-white"
+                className="font-display font-extrabold uppercase leading-[0.86] tracking-[-0.025em] text-white"
                 style={{ fontSize: 'clamp(32px, 12.5cqi, 72px)' }}
               >
                 {marca.nombre}

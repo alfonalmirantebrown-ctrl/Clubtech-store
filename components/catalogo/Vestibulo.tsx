@@ -54,6 +54,7 @@ function CardSala({ sala, n }: { sala: Sala; n: number }) {
             <ProductoVisual
               nombre={categoria.nombre}
               foto={foto}
+              sinFoto={<Glyph categoria={categoria.slug} className="h-auto w-full" />}
               sizes="(min-width: 768px) 30vw, 60vw"
               className="mx-auto aspect-[4/5] w-[78%] max-w-[340px] rotate-[2deg] saturate-[0.35] transition-[filter,transform] duration-700 group-hover:rotate-0 group-hover:saturate-100"
             />
@@ -65,7 +66,7 @@ function CardSala({ sala, n }: { sala: Sala; n: number }) {
 
       <div className="relative">
         <h3
-          className="font-extrabold uppercase leading-[0.86] tracking-[-0.045em] text-white"
+          className="font-display font-extrabold uppercase leading-[0.86] tracking-[-0.025em] text-white"
           style={{ fontSize: grande ? 'clamp(48px, 13cqi, 180px)' : 'clamp(32px, 11cqi, 84px)' }}
         >
           {categoria.nombre}
@@ -83,8 +84,9 @@ export default function Vestibulo({ salas }: { salas: Sala[] }) {
   return (
     <section id="vestibulo" className="scroll-mt-14 bg-black px-3 pb-24 pt-20 md:px-5 md:pt-28">
       <header className="mx-auto mb-10 flex max-w-[1600px] items-end justify-between gap-6 px-2 md:mb-14">
-        <h2 className="max-w-[14ch] text-[clamp(28px,4vw,52px)] font-bold leading-[0.95] tracking-[-0.035em] text-white">
-          Siete salas. Elegí por dónde arrancar.
+        <h2 className="max-w-[16ch] font-display text-[clamp(30px,4.4vw,60px)] font-bold leading-[0.95] tracking-[-0.02em] text-white">
+          Siete salas.{' '}
+          <em className="font-serif font-normal italic tracking-[-0.01em] text-off-white/70">Elegí por dónde arrancar.</em>
         </h2>
         <p className="hidden font-mono text-[11px] uppercase tracking-[0.14em] text-grey-dim md:block">N.01 — Vestíbulo</p>
       </header>

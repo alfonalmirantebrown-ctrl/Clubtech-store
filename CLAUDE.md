@@ -62,8 +62,14 @@ Clubtech Store es un e-commerce premium de tecnología para Argentina. Venden ce
 
 ## Tipografía
 
-**ESTADO ACTUAL:** Inter de Google Fonts (placeholder temporal).
-**TODO:** cambiar tipografía final cuando se decida. Opciones en evaluación:
+**DECIDIDO: Combo 1.**
+
+- Display (titulares, CLUBTECH, categorías, marcas, modelos, precio): **Bricolage Grotesque**, clase `font-display`, condensada al 86% (`font-stretch`) y con tracking -0.02/-0.03em
+- Acento editorial (taglines, frases en cursiva): **Instrument Serif** italic, clase `font-serif`
+- Texto: **Mona Sans** (archivo propio en `app/fonts/`, Next 14 no la trae), clase `font-sans`
+- Etiquetas técnicas: **Geist Mono** (paquete `geist`), clase `font-mono`
+
+Opciones que se evaluaron:
 
 - Combo 1 · Bricolage Grotesque + Mona Sans + Instrument Serif + Geist Mono
 - Combo 2 · Geist (todo) + Instrument Serif
@@ -225,7 +231,7 @@ Nota: aunque caveman esté activo, las explicaciones a Joaquín siguen siendo en
 - [x] Nivel 3 Estante
 - [x] Nivel 4 Vitrina del Producto
 - [x] SVG fallbacks por categoría (mientras no hay fotos)
-- [ ] Decidir tipografía final (4 combos en evaluación)
+- [x] Decidir tipografía final (Combo 1)
 - [ ] Micro-interacciones custom
 - [x] Easter egg (tipear "clubh" en cualquier página)
 - [ ] Fotos de productos (upload manual a bucket productos cuando estén)

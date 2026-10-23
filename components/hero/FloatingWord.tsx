@@ -28,7 +28,7 @@ function Letras() {
 export default function FloatingWord({ className = '' }: { className?: string }) {
   return (
     <h1
-      className={`glitch select-none font-sans font-extrabold leading-[0.85] tracking-[-0.035em] text-white md:tracking-[-0.055em] ${className}`}
+      className={`glitch select-none font-display font-extrabold leading-[0.85] tracking-normal text-white md:tracking-[-0.02em] ${className}`}
       aria-label="Clubtech"
     >
       <span aria-hidden className="relative">
