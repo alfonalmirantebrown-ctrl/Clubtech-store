@@ -1,9 +1,11 @@
 import Link from 'next/link';
 import Glyph from '@/components/Glyph';
+import ProductoVisual from '@/components/ProductoVisual';
+import type { Foto } from '@/lib/fotos';
 import { formatUSD } from '@/lib/format';
 import type { Categoria } from '@/lib/types';
 
-type Sala = { categoria: Categoria; piezas: number; desde: number | null };
+type Sala = { categoria: Categoria; piezas: number; desde: number | null; foto: Foto | null };
 
 // Grilla asimétrica: Celulares ocupa toda la primera fila, después 2, después 3 y un pasillo final.
 const LAYOUT: Record<string, { col: string; alto: string; radio: string; glyph: string }> = {
@@ -17,7 +19,7 @@ const LAYOUT: Record<string, { col: string; alto: string; radio: string; glyph: 
 };
 
 function CardSala({ sala, n }: { sala: Sala; n: number }) {
-  const { categoria, piezas, desde } = sala;
+  const { categoria, piezas, desde, foto } = sala;
   const l = LAYOUT[categoria.slug] ?? LAYOUT.accesorios;
   const grande = categoria.slug === 'celulares';
 
@@ -47,7 +49,17 @@ function CardSala({ sala, n }: { sala: Sala; n: number }) {
         className={`pointer-events-none absolute right-[6%] top-1/2 -translate-y-1/2 ${l.glyph}`}
       >
         <div className="float-glyph" style={{ animationDelay: `${-n * 0.9}s` }}>
-          <Glyph categoria={categoria.slug} className="h-auto w-full" />
+          {foto ? (
+            // lámina con la foto: apagada en reposo, a color cuando entrás
+            <ProductoVisual
+              nombre={categoria.nombre}
+              foto={foto}
+              sizes="(min-width: 768px) 30vw, 60vw"
+              className="mx-auto aspect-[4/5] w-[78%] max-w-[340px] rotate-[2deg] saturate-[0.35] transition-[filter,transform] duration-700 group-hover:rotate-0 group-hover:saturate-100"
+            />
+          ) : (
+            <Glyph categoria={categoria.slug} className="h-auto w-full" />
+          )}
         </div>
       </div>
 

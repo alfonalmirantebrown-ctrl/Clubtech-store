@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { notFound, redirect } from 'next/navigation';
 import GaleriaMarcas from '@/components/catalogo/GaleriaMarcas';
 import { getCatalogo, getMarcasDeCategoria } from '@/lib/catalogo';
+import { fotoDe } from '@/lib/fotos';
 import { estiloZona } from '@/lib/zonas';
 
 export const revalidate = 600;
@@ -47,6 +48,7 @@ export default async function SalaDeMarcas({ params }: { params: { categoria: st
           piezas: m.productos.length,
           precioDesde: m.precioDesde,
           modelos: m.productos.map((p) => p.nombre),
+          foto: m.productos.map(fotoDe).find(Boolean) ?? null,
         }))}
       />
     </main>

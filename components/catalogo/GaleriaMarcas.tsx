@@ -3,10 +3,12 @@
 import Link from 'next/link';
 import { useCallback, useEffect, useRef } from 'react';
 import Glyph from '@/components/Glyph';
+import ProductoVisual from '@/components/ProductoVisual';
+import type { Foto } from '@/lib/fotos';
 import { formatUSD } from '@/lib/format';
 import type { Marca } from '@/lib/types';
 
-type Item = { marca: Marca; piezas: number; precioDesde: number | null; modelos: string[] };
+type Item = { marca: Marca; piezas: number; precioDesde: number | null; modelos: string[]; foto: Foto | null };
 
 export default function GaleriaMarcas({ categoria, items }: { categoria: string; items: Item[] }) {
   const pista = useRef<HTMLDivElement>(null);
@@ -38,7 +40,7 @@ export default function GaleriaMarcas({ categoria, items }: { categoria: string;
         role="list"
         aria-label="Marcas"
       >
-        {items.map(({ marca, piezas, precioDesde, modelos }, i) => (
+        {items.map(({ marca, piezas, precioDesde, modelos, foto }, i) => (
           <Link
             key={marca.id}
             href={`/catalogo/${categoria}/${marca.slug}`}
@@ -49,6 +51,7 @@ export default function GaleriaMarcas({ categoria, items }: { categoria: string;
               {
                 '--glow': marca.glow ?? 'var(--blue-glow)',
                 borderRadius: i % 2 ? '0 0 32px 0' : '0',
+                containerType: 'inline-size',
                 background: `radial-gradient(120% 70% at 50% 110%, ${marca.grad_to ?? '#000'}55, transparent 60%), radial-gradient(90% 60% at 80% 0%, ${marca.grad_via ?? '#000'}33, transparent 70%), var(--zone-bg)`,
               } as React.CSSProperties
             }
@@ -60,7 +63,16 @@ export default function GaleriaMarcas({ categoria, items }: { categoria: string;
 
             <div aria-hidden className="pointer-events-none absolute inset-x-0 top-[16%] mx-auto w-[58%] transition-transform duration-700 ease-out group-hover:-translate-y-2 group-hover:scale-[1.04]">
               <div className="float-glyph" style={{ animationDelay: `${-i * 1.3}s` }}>
-                <Glyph categoria={categoria} tinte={marca.glow} className="h-auto w-full" />
+                {foto ? (
+                  <ProductoVisual
+                    nombre={marca.nombre}
+                    foto={foto}
+                    sizes="(min-width: 768px) 260px, 50vw"
+                    className="mx-auto aspect-[4/5] w-[86%] saturate-[0.4] transition-[filter] duration-700 group-hover:saturate-100"
+                  />
+                ) : (
+                  <Glyph categoria={categoria} tinte={marca.glow} className="h-auto w-full" />
+                )}
               </div>
             </div>
 
@@ -71,7 +83,10 @@ export default function GaleriaMarcas({ categoria, items }: { categoria: string;
                 ))}
                 {modelos.length > 3 && <li className="text-grey-dim">+ {modelos.length - 3} más</li>}
               </ul>
-              <h2 className="text-[clamp(44px,9vw,72px)] font-extrabold uppercase leading-[0.86] tracking-[-0.045em] text-white">
+              <h2
+                className="font-extrabold uppercase leading-[0.86] tracking-[-0.045em] text-white"
+                style={{ fontSize: 'clamp(32px, 12.5cqi, 72px)' }}
+              >
                 {marca.nombre}
               </h2>
               <p className="mt-3 font-mono text-[11px] uppercase tracking-[0.14em]" style={{ color: 'var(--glow)' }}>

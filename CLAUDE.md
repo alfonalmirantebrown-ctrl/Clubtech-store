@@ -211,6 +211,8 @@ Nota: aunque caveman esté activo, las explicaciones a Joaquín siguen siendo en
 - En las variantes, `"Default"` en memoria/color significa "no aplica" y no se muestra como opción.
 - Categorías con una sola marca (laptops, smartwatches, audio) saltan directo del Vestíbulo al Estante.
 - La intro del hero se ve una vez por sesión del navegador; con `prefers-reduced-motion` se saltea.
+- Fotos de producto (`lib/fotos.ts`): se usa `productos.image_url` de Supabase. Si está vacío, se usa una foto de MUESTRA (5 modelos, fotos libres de Wikimedia, con badge "Muestra" y crédito). Si no hay ninguna, se ve un espacio vacío con marcas de corte ("Foto en camino"). Cuando lleguen las fotos reales: subirlas al bucket `productos`, poner la URL en `image_url` y vaciar el objeto `DEMO` de `lib/fotos.ts`.
+- Fotos ideales del cliente: PNG o JPG de al menos 1600px de alto, producto solo, fondo negro o transparente, mismo ángulo en todos los modelos, nombradas con el slug del producto (ej: `iphone-17-pro.png`).
 - Supabase pausa el proyecto gratis si no se usa: si el sitio no trae datos, revisar que esté activo.
 
 ## Pendientes

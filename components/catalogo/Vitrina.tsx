@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useEffect, useMemo, useState } from 'react';
 import ProductoVisual from '@/components/ProductoVisual';
 import { formatUSD } from '@/lib/format';
+import { fotoDe } from '@/lib/fotos';
 import type { ProductoCompleto } from '@/lib/types';
 import { coloresDe, esOpcion, memoriasDe } from '@/lib/variantes';
 import { linkWhatsApp } from '@/lib/whatsapp';
@@ -90,7 +91,7 @@ export default function Vitrina({ producto }: { producto: ProductoCompleto }) {
     <section className="grid min-h-[100svh] grid-cols-1 md:grid-cols-12">
       {/* Producto: va primero en mobile, a la derecha en desktop */}
       <div
-        className="relative flex min-h-[50svh] items-center justify-center overflow-hidden md:order-2 md:col-span-7 md:min-h-[100svh]"
+        className="relative flex min-h-[50svh] items-center justify-center overflow-hidden pb-12 pt-24 md:order-2 md:py-0 md:col-span-7 md:min-h-[100svh]"
         onPointerMove={onMove}
         onPointerLeave={onLeave}
         style={{ perspective: 1200 }}
@@ -102,19 +103,16 @@ export default function Vitrina({ producto }: { producto: ProductoCompleto }) {
             background: `radial-gradient(42% 38% at 50% 52%, ${variante?.color_hex ?? '#1E7FFF'}2e, transparent 70%), radial-gradient(60% 50% at 50% 60%, rgba(30,127,255,0.12), transparent 70%)`,
           }}
         />
-        <span aria-hidden className="absolute bottom-[14%] left-1/2 h-px w-[46%] -translate-x-1/2 bg-gradient-to-r from-transparent via-white/25 to-transparent" />
-        <motion.div style={{ rotateX: rotX, rotateY: rotY, transformStyle: 'preserve-3d' }} className="relative w-[64%] max-w-[560px] md:w-[56%]">
-          <div className="float-glyph">
-            <ProductoVisual
-              nombre={producto.nombre}
-              categoria={categoria.slug}
-              imageUrl={producto.image_url}
-              tinte={variante?.color_hex}
-              priority
-              sizes="(min-width: 768px) 55vw, 90vw"
-              className="aspect-square h-auto w-full"
-            />
-          </div>
+        <motion.div style={{ rotateX: rotX, rotateY: rotY, transformStyle: 'preserve-3d' }} className="relative w-[72%] max-w-[520px] md:w-[52%]">
+          <ProductoVisual
+            nombre={producto.nombre}
+            foto={fotoDe(producto)}
+            tinte={variante?.color_hex}
+            priority
+            credito
+            sizes="(min-width: 768px) 45vw, 80vw"
+            className="aspect-[4/5] w-full shadow-[0_40px_120px_-30px_rgba(30,127,255,0.35)]"
+          />
         </motion.div>
       </div>
 
