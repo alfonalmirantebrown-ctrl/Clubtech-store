@@ -24,24 +24,25 @@ const mezcla = (a: number, b: number, t: number) => a + (b - a) * t;
 /*
   Coreografía del celular según el scroll:
   0.00–0.22  hero: de frente, levemente girado
-  0.22–0.45  acto I: gira y muestra la cámara, se acerca
-  0.45–0.80  acto II: de espaldas, cambia de color
-  0.80–1.00  acto III: se aleja hacia arriba y deja lugar a los números
+  0.22–0.45  acto I: gira y muestra la cámara (texto a la izquierda, celular a la derecha)
+  0.45–0.80  acto II: cruza a la izquierda y cambia de color (texto a la derecha)
+  0.80–1.00  acto III: se va hacia arriba y deja lugar al pase al catálogo
 */
 export function pose(p: number, mobile: boolean) {
   const a1 = suave(0.12, 0.34, p);
   const a2 = suave(0.42, 0.52, p);
   const a3 = suave(0.8, 0.97, p);
   const xHero = mobile ? 0 : 0.95;
-  const x = mezcla(mezcla(mezcla(xHero, mobile ? 0 : -0.15, a1), mobile ? 0 : 0.85, a2), mobile ? 0 : 0.85, a3);
+  // los textos se alternan de lado; el celular siempre se ubica del lado contrario
+  const x = mobile ? 0 : mezcla(mezcla(xHero, 0.8, a1), -0.85, a2);
   // en el celular la pieza va más chica y sube en el acto II para dejar lugar al texto de abajo
-  const y = mobile ? mezcla(mezcla(mezcla(-0.12, 0.05, a1), 0.42, a2), 2.6, a3) : mezcla(0, 2.6, a3);
+  const y = mobile ? mezcla(mezcla(mezcla(-0.12, 0.4, a1), 0.42, a2), 2.6, a3) : mezcla(0, 2.6, a3);
   return {
     x,
     y,
     rotY: mezcla(mezcla(-0.42, Math.PI + 0.32, a1), Math.PI - 0.28, a2),
     rotX: mezcla(0.06, -0.12, a1) * (1 - a2) + 0.05 * a2,
-    scale: mezcla(mezcla(1, 1.32, a1), 1.05, a2) * (mobile ? mezcla(mezcla(0.62, 0.78, a1), 0.58, a2) : 1),
+    scale: mezcla(mezcla(1, 1.32, a1), 1.05, a2) * (mobile ? mezcla(mezcla(0.62, 0.46, a1), 0.58, a2) : 1),
   };
 }
 

@@ -106,12 +106,12 @@ export default function Showroom({ pieza }: Props) {
       // la duración total del timeline es 1 = todo el recorrido del showroom
       tl.set({}, {}, 1)
         .to('[data-acto="0"]', { autoAlpha: 0, y: -40, duration: 0.08 }, 0.1)
-        .to('[data-palabra]', { opacity: 0.07, scale: 0.94, duration: 0.12 }, 0.08)
+        .to('[data-indicador]', { autoAlpha: 0, duration: 0.04 }, 0.04)
+        .to('[data-palabra]', { opacity: 0, scale: 0.96, duration: 0.12 }, 0.01)
         .fromTo('[data-acto="1"]', { autoAlpha: 0, y: 50 }, { autoAlpha: 1, y: 0, duration: 0.07 }, 0.2)
         .to('[data-acto="1"]', { autoAlpha: 0, y: -40, duration: 0.05 }, 0.38)
         .fromTo('[data-acto="2"]', { autoAlpha: 0, y: 50 }, { autoAlpha: 1, y: 0, duration: 0.05 }, 0.46)
         .to('[data-acto="2"]', { autoAlpha: 0, y: -40, duration: 0.04 }, 0.79)
-        .to('[data-palabra]', { opacity: 0, duration: 0.05 }, 0.8)
         .fromTo('[data-acto="3"]', { autoAlpha: 0, y: 60 }, { autoAlpha: 1, y: 0, duration: 0.07 }, 0.84);
     },
     { scope: raiz, dependencies: [reducido, mobile, pieza.colores] },
@@ -147,8 +147,8 @@ export default function Showroom({ pieza }: Props) {
           />
         </div>
 
-        {/* la palabra gigante, detrás de la pieza */}
-        <div data-palabra className="absolute inset-x-0 bottom-[20%] px-5 md:bottom-[16%] md:px-8">
+        {/* la palabra gigante: al llegar, el celular aparece DETRÁS de ella; al bajar, se desvanece y lo deja pasar */}
+        <div data-palabra className="absolute inset-x-0 bottom-[20%] z-10 px-5 md:bottom-[16%] md:px-8">
           <div className="mx-auto max-w-[1600px]">
             <FloatingWord className="-ml-[0.04em] whitespace-nowrap text-[12.6vw] md:text-[clamp(56px,13.2vw,206px)]" />
           </div>
@@ -166,7 +166,7 @@ export default function Showroom({ pieza }: Props) {
         )}
 
         {/* ACTO 0 · llegada */}
-        <div data-acto="0" className="absolute inset-0 px-5 pt-24 md:px-8 md:pt-28">
+        <div data-acto="0" className="pointer-events-none absolute inset-0 z-20 px-5 pt-24 md:px-8 md:pt-28">
           <div className="mx-auto flex h-full max-w-[1600px] flex-col">
             <div className="flex items-start justify-between gap-6">
               <p className="max-w-[17ch] font-sans font-light text-[24px] leading-[1.05] text-off-white md:text-[34px]">
@@ -177,7 +177,7 @@ export default function Showroom({ pieza }: Props) {
             {/* etiqueta del producto en el hero */}
             <Link
               href={`/producto/${pieza.slug}`}
-              className="group absolute hidden font-mono text-[11px] uppercase leading-relaxed tracking-[0.14em] md:block"
+              className="group pointer-events-auto absolute hidden font-mono text-[11px] uppercase leading-relaxed tracking-[0.14em] md:block"
               style={{ left: 'calc(var(--ax) - 26vw)', top: '42%' }}
             >
               <span className="flex items-center gap-3">
@@ -201,22 +201,22 @@ export default function Showroom({ pieza }: Props) {
         {!reducido && (
           <>
             {/* ACTO I · mirala de cerca */}
-            <div data-acto="1" className="invisible absolute inset-0 flex items-end px-5 pb-16 md:items-center md:justify-end md:px-8 md:pb-0">
-              <div className="max-w-[460px] md:mr-[4vw] md:text-right">
+            <div data-acto="1" className="invisible absolute inset-0 z-20 flex items-end px-5 pb-16 md:items-center md:justify-start md:px-8 md:pb-0">
+              <div className="max-w-[460px] md:ml-[2vw]">
                 <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-blue-glow">01 — Cámara</p>
                 <h2 className="mt-3 font-display text-[clamp(40px,5.4vw,84px)] font-extrabold uppercase leading-[0.84] tracking-[-0.03em] text-white">
                   Mirala
                   <span className="block font-sans font-light text-[0.62em] font-normal normal-case tracking-[-0.01em] text-off-white">de cerca.</span>
                 </h2>
-                <p className="mt-6 text-[15px] leading-relaxed text-off-white/70 md:ml-auto md:max-w-[36ch]">
+                <p className="mt-6 text-[15px] leading-relaxed text-off-white/70 md:max-w-[36ch]">
                   Como en el local: la das vuelta, mirás la cámara, la sentís en la mano. Solo que acá no hacés la cola.
                 </p>
               </div>
             </div>
 
             {/* ACTO II · el color */}
-            <div data-acto="2" className="invisible absolute inset-0 flex items-end px-5 pb-16 md:items-center md:px-8 md:pb-0">
-              <div className="max-w-[640px]">
+            <div data-acto="2" className="invisible absolute inset-0 z-20 flex items-end justify-end px-5 pb-16 text-right md:items-center md:px-8 md:pb-0">
+              <div className="max-w-[640px] md:mr-[2vw]">
                 <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-grey-dim">
                   02 — Color {String(color + 1).padStart(2, '0')}/{String(pieza.colores.length).padStart(2, '0')}
                 </p>
@@ -228,7 +228,7 @@ export default function Showroom({ pieza }: Props) {
                   {c?.color}
                 </h2>
                 <p className="mt-4 font-sans font-light text-[26px] text-off-white md:text-[34px]">El color lo elegís vos.</p>
-                <div className="mt-6 flex items-center gap-4 font-mono text-[11px] uppercase tracking-[0.14em] text-grey-dim">
+                <div className="mt-6 flex items-center justify-end gap-4 font-mono text-[11px] uppercase tracking-[0.14em] text-grey-dim">
                   <span className="flex gap-2">
                     {pieza.colores.map((x, i) => (
                       <span
@@ -246,7 +246,7 @@ export default function Showroom({ pieza }: Props) {
             </div>
 
             {/* 03 · pase al catálogo */}
-            <div data-acto="3" className="invisible absolute inset-0 flex items-center px-5 md:px-8">
+            <div data-acto="3" className="invisible absolute inset-0 z-20 flex items-center px-5 md:px-8">
               <div className="mx-auto w-full max-w-[1600px]">
                 <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-blue-glow">03 — Catálogo</p>
                 <h2 className="mt-4 max-w-[14ch] font-display text-[clamp(36px,5.4vw,92px)] font-extrabold uppercase leading-[0.86] tracking-[-0.03em] text-white">
@@ -262,7 +262,7 @@ export default function Showroom({ pieza }: Props) {
 
         {/* indicador de recorrido */}
         {!reducido && (
-          <div aria-hidden className="absolute right-5 top-1/2 hidden -translate-y-1/2 flex-col items-center gap-3 font-mono text-[10px] uppercase tracking-[0.16em] text-grey-dim md:right-8 md:flex">
+          <div data-indicador aria-hidden className="absolute right-5 top-1/2 hidden -translate-y-1/2 flex-col items-center gap-3 font-mono text-[10px] uppercase tracking-[0.16em] text-grey-dim md:right-8 md:flex">
             <span>Scroll</span>
             <span className="relative h-10 w-px overflow-hidden bg-line">
               <span className="scroll-hint absolute inset-x-0 top-0 h-3 bg-off-white" />

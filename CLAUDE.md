@@ -126,6 +126,8 @@ Narrativa scroll de 5 actos dentro de un escenario fijo (`components/showroom/`)
 - **Aura**: rayos de luz CSS (`.aura-rayos`) que siguen a la pieza; más intensos de noche (hora real de BA).
 - **NO usar lenguaje de museo en la web** (decisión de Joaquín): nada de "salas", "piezas", "exhibición", "vitrina", "vestíbulo" ni datos tipo "Salas 07 / Piezas 61 / Moneda USD" de cara al visitante. Los nombres internos del código (Vestibulo, Estante, Vitrina) pueden quedar.
 - **01** · llegada: frase en serif ("Lo último en celulares, tablets y consolas. Precio en dólares, sin vueltas."), CLUBTECH gigante detrás del celular, etiqueta "Destacado" con el producto héroe de Celulares y su precio real.
+- Al llegar, el celular aparece **detrás** de CLUBTECH (palabra `z-10`, canvas debajo). Apenas se empieza a scrollear, CLUBTECH se desvanece del todo y el celular queda adelante.
+- **Los textos de cada momento se alternan de lado** (decisión de Joaquín): 01 izquierda → 02 derecha → 03 izquierda; el celular siempre se ubica del lado contrario (`pose` en `lib/escena.ts`).
 - **01 — Cámara** · "Mirala de cerca": el celular gira y muestra la cámara.
 - **02 — Color** · "El color lo elegís vos": recorre los colores reales del producto (de `variantes`).
 - **03 — Catálogo** · "No solo celulares.": pase al catálogo de categorías.
