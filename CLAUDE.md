@@ -122,7 +122,7 @@ En CLUBTECH flotante, al hover:
 
 Narrativa scroll de 5 actos dentro de un escenario fijo (`components/showroom/`), inspirada en la skill `ubernatural-style`:
 
-- **Pieza central 3D** (`Escena3D.tsx`): celular hecho con geometría propia en React Three Fiber (sin modelos descargados), marco metálico, dorso de vidrio, 3 lentes, pantalla de bloqueo con la hora real de Buenos Aires. Estudio de luces con `Lightformer` (sin HDR externo). Polvo en el aire que se junta donde está el mouse.
+- **Pieza central 3D** (`Escena3D.tsx`): modelo 3D real del iPhone 17 Pro (ver abajo), con pantalla de bloqueo que muestra la hora real de Buenos Aires. Estudio de luces con `Lightformer` (sin HDR externo). Polvo en el aire que se junta donde está el mouse.
 - **Aura**: rayos de luz CSS (`.aura-rayos`) que siguen a la pieza; más intensos de noche (hora real de BA).
 - **NO usar lenguaje de museo en la web** (decisión de Joaquín): nada de "salas", "piezas", "exhibición", "vitrina", "vestíbulo" ni datos tipo "Salas 07 / Piezas 61 / Moneda USD" de cara al visitante. Los nombres internos del código (Vestibulo, Estante, Vitrina) pueden quedar.
 - **01** · llegada: frase en serif ("Lo último en celulares, tablets y consolas. Precio en dólares, sin vueltas."), CLUBTECH gigante detrás del celular, etiqueta "Destacado" con el producto héroe de Celulares y su precio real.
@@ -131,7 +131,8 @@ Narrativa scroll de 5 actos dentro de un escenario fijo (`components/showroom/`)
 - **01 — Cámara** · "Mirala de cerca": el celular gira y muestra la cámara.
 - **02 — Color** · "El color lo elegís vos": recorre los colores reales del producto (de `variantes`).
 - **03 — Catálogo** · "No solo celulares.": pase al catálogo de categorías.
-- **Pendiente**: el celular del hero tiene que ser un **modelo 3D real** (.glb). Hoy es geometría propia provisoria. Los productos a la venta pueden ser fotos 2D.
+- **Modelo 3D real** del hero: `public/models/celular.glb` = «iPhone 17 Pro» de **Ranguel** (Sketchfab), licencia **CC BY 4.0** → el crédito en el footer es obligatorio, no sacarlo. Joaquín lo subió como `.usdz` (23,5 MB); se convirtió con `scripts/usdz-a-glb.py` y se optimizó con gltf-transform (WebP 1024 + meshopt) a 2,2 MB. Se carga con `useGLTF(..., false, true)` (meshopt, sin Draco).
+- En `Escena3D.tsx` el modelo se tiñe por nombre de material: `Anodized_aluminum` (cuerpo, color de la variante), `Frosted_glass` (panel trasero, el mismo color 30% más claro). La pantalla es el material `OLED`: se le pone la textura con la hora de BA, espejada porque la pantalla del modelo mira hacia adentro. Los productos a la venta siguen siendo fotos 2D.
 - Después: Vestíbulo y **Cierre** ("Sin carrito. Sin formulario. Un mensaje y listo." + botón magnético a WhatsApp).
 - **Sonido ambiente** opcional (botón en la nav), sintetizado con WebAudio; arranca apagado.
 - Coreografía del celular según el scroll: `lib/escena.ts` (`pose`). Scroll: GSAP ScrollTrigger + Lenis en el mismo ticker (`components/SmoothScroll.tsx`).

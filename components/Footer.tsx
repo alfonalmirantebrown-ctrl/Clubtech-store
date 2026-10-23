@@ -15,7 +15,20 @@ export default function Footer() {
             WhatsApp ↗
           </a>
         </div>
-        <p>Precios en dólares · Sujetos a stock</p>
+        <div className="md:text-right">
+          <p>Precios en dólares · Sujetos a stock</p>
+          {/* crédito obligatorio de la licencia CC BY 4.0 del modelo 3D */}
+          <p className="mt-1 normal-case tracking-[0.06em] text-grey-dim/70">
+            Modelo 3D «iPhone 17 Pro» por{' '}
+            <a href="https://sketchfab.com/3d-models/iphone-17-pro-4541aa8a28324b33a2baaf81d263aaec" target="_blank" rel="noopener noreferrer" className="underline decoration-line underline-offset-2 hover:text-off-white">
+              Ranguel
+            </a>{' '}
+            ·{' '}
+            <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer" className="underline decoration-line underline-offset-2 hover:text-off-white">
+              CC BY 4.0
+            </a>
+          </p>
+        </div>
       </div>
     </footer>
   );

@@ -1,37 +1,18 @@
 'use client';
 
-import { Environment, Lightformer, RoundedBox } from '@react-three/drei';
+import { Environment, Lightformer, useGLTF } from '@react-three/drei';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
-import { useEffect, useMemo, useRef } from 'react';
+import { Suspense, useEffect, useMemo, useRef } from 'react';
 import * as THREE from 'three';
 import { escena, pose } from '@/lib/escena';
 
-// Medidas del celular (unidades de escena). Proporción de un 6.3".
-const W = 0.78;
-const H = 1.62;
-const D = 0.085;
-const R = 0.11;
+// Modelo 3D real: «iPhone 17 Pro» de Ranguel (sketchfab.com/Ranguel), licencia CC BY 4.0.
+// Convertido de .usdz a .glb y optimizado (texturas WebP 1024px + geometría meshopt): 23,5 MB → 2,2 MB.
+const MODELO = '/models/celular.glb';
+useGLTF.preload(MODELO, false, true);
 
-function rectRedondeado(w: number, h: number, r: number) {
-  const s = new THREE.Shape();
-  const x = -w / 2;
-  const y = -h / 2;
-  s.moveTo(x + r, y);
-  s.lineTo(x + w - r, y);
-  s.quadraticCurveTo(x + w, y, x + w, y + r);
-  s.lineTo(x + w, y + h - r);
-  s.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
-  s.lineTo(x + r, y + h);
-  s.quadraticCurveTo(x, y + h, x, y + h - r);
-  s.lineTo(x, y + r);
-  s.quadraticCurveTo(x, y, x + r, y);
-  const g = new THREE.ShapeGeometry(s, 24);
-  // ShapeGeometry usa las coordenadas como UV: las normalizamos a 0–1 para que la textura cubra justo la pantalla
-  const uv = g.attributes.uv;
-  for (let i = 0; i < uv.count; i++) uv.setXY(i, (uv.getX(i) - x) / w, (uv.getY(i) - y) / h);
-  uv.needsUpdate = true;
-  return g;
-}
+// Alto del celular en unidades de escena (con la cámara actual ocupa ~60% de la pantalla)
+const H = 1.62;
 
 // Pantalla de bloqueo dibujada en un canvas: hora real de Buenos Aires.
 function usePantalla() {
@@ -93,20 +74,69 @@ function usePantalla() {
 
 function Celular({ mobile }: { mobile: boolean }) {
   const grupo = useRef<THREE.Group>(null);
-  const marco = useRef<THREE.MeshPhysicalMaterial>(null);
-  const dorso = useRef<THREE.MeshPhysicalMaterial>(null);
+  const { scene } = useGLTF(MODELO, false, true);
   const pantalla = usePantalla();
-  const geoPantalla = useMemo(() => rectRedondeado(W - 0.035, H - 0.035, R - 0.02), []);
-  const geoDorso = useMemo(() => rectRedondeado(W - 0.02, H - 0.02, R - 0.01), []);
   const destino = useMemo(() => new THREE.Color('#C0C0C8'), []);
+  const destinoClaro = useMemo(() => new THREE.Color('#C0C0C8'), []);
+  const blanco = useMemo(() => new THREE.Color('#ffffff'), []);
   const nacimiento = useRef<number | null>(null);
+
+  // Preparamos el modelo una sola vez: materiales propios, cuerpo a tintar, pantalla con la hora,
+  // centrado y a escala, y girado para que la pantalla mire a cámara.
+  const { modelo, tintes, vidrios, escala, centro, giro } = useMemo(() => {
+    const m = scene.clone(true);
+    const tintes: THREE.MeshStandardMaterial[] = [];
+    const vidrios: THREE.MeshStandardMaterial[] = [];
+    let zPantalla = 0;
+    m.traverse((o) => {
+      const mesh = o as THREE.Mesh;
+      if (!mesh.isMesh) return;
+      const mat = (mesh.material as THREE.MeshStandardMaterial).clone();
+      mesh.material = mat;
+      if (mat.name === 'Anodized_aluminum') {
+        // aluminio anodizado: metálico satinado, del color de la variante
+        mat.metalness = 0.62;
+        mat.roughness = 0.3;
+        mat.envMapIntensity = 1.3;
+        // el relieve original, achicado, se ve como purpurina: lo dejamos muy sutil
+        mat.normalScale.set(0.12, 0.12);
+        tintes.push(mat);
+      }
+      if (mat.name === 'Frosted_glass') {
+        // panel de vidrio esmerilado del dorso: mismo color, un tono más claro
+        mat.roughness = 0.45;
+        mat.metalness = 0.1;
+        mat.normalScale.set(0.15, 0.15);
+        vidrios.push(mat);
+      }
+      if (mat.name === 'OLED') {
+        pantalla.flipY = false; // las texturas de glTF no van invertidas
+        // la pantalla del modelo está modelada mirando hacia adentro: espejamos la imagen para que se lea bien
+        pantalla.wrapS = THREE.RepeatWrapping;
+        pantalla.repeat.x = -1;
+        mat.map = pantalla;
+        mat.emissiveMap = pantalla;
+        mat.color.set('#ffffff');
+        mat.emissive.set('#ffffff');
+        mat.emissiveIntensity = 0.6;
+        m.updateMatrixWorld(true);
+        zPantalla = new THREE.Box3().setFromObject(mesh).getCenter(new THREE.Vector3()).z;
+      }
+    });
+    const caja = new THREE.Box3().setFromObject(m);
+    const centro = caja.getCenter(new THREE.Vector3());
+    const escala = H / caja.getSize(new THREE.Vector3()).y;
+    // si la pantalla quedó del lado -z, lo damos vuelta para que de frente se vea la pantalla
+    const giro = zPantalla < centro.z ? Math.PI : 0;
+    return { modelo: m, tintes, vidrios, escala, centro, giro };
+  }, [scene, pantalla]);
 
   useFrame((state, dt) => {
     const g = grupo.current;
     if (!g) return;
     const t = state.clock.elapsedTime;
     if (nacimiento.current === null) nacimiento.current = t;
-    // entrada: la pieza aparece girando y crece hasta su lugar (1.6s)
+    // entrada: el celular aparece girando y crece hasta su lugar (1.6s)
     const e = Math.min(1, (t - nacimiento.current) / 1.6);
     const entrada = 1 - Math.pow(1 - e, 3);
 
@@ -126,60 +156,16 @@ function Celular({ mobile }: { mobile: boolean }) {
     if (c) destino.set(c.hex);
     // cambio de color en ~0.5s, igual en una compu rápida que en un celular lento
     const kc = 1 - Math.pow(0.004, dt);
-    marco.current?.color.lerp(destino, kc);
-    dorso.current?.color.lerp(destino, kc);
-    // un poco de luz propia del color, para que la luz azul de la escena no lo lave
-    dorso.current?.emissive.lerp(destino, kc);
+    tintes.forEach((m) => m.color.lerp(destino, kc));
+    destinoClaro.copy(destino).lerp(blanco, 0.3);
+    vidrios.forEach((m) => m.color.lerp(destinoClaro, kc));
   });
-
-  const lente = (x: number, y: number) => (
-    <group position={[x, y, -D / 2 - 0.032]}>
-      <mesh rotation={[Math.PI / 2, 0, 0]}>
-        <cylinderGeometry args={[0.068, 0.072, 0.03, 48]} />
-        <meshPhysicalMaterial color="#9a9aa4" metalness={1} roughness={0.18} />
-      </mesh>
-      <mesh rotation={[Math.PI / 2, 0, 0]} position={[0, 0, -0.012]}>
-        <cylinderGeometry args={[0.052, 0.052, 0.012, 48]} />
-        <meshPhysicalMaterial color="#05070d" metalness={0.2} roughness={0.05} clearcoat={1} clearcoatRoughness={0} iridescence={1} iridescenceIOR={1.6} />
-      </mesh>
-    </group>
-  );
 
   return (
     <group ref={grupo} scale={0.55}>
-      {/* cuerpo / marco de titanio */}
-      <RoundedBox args={[W, H, D]} radius={R} smoothness={8}>
-        <meshPhysicalMaterial ref={marco} color="#C0C0C8" metalness={1} roughness={0.2} clearcoat={0.6} clearcoatRoughness={0.2} envMapIntensity={1.4} />
-      </RoundedBox>
-      {/* pantalla */}
-      <mesh geometry={geoPantalla} position={[0, 0, D / 2 + 0.0015]}>
-        <meshPhysicalMaterial map={pantalla} emissiveMap={pantalla} emissive="#ffffff" emissiveIntensity={0.55} roughness={0.08} clearcoat={1} />
-      </mesh>
-      {/* dorso de vidrio esmerilado */}
-      <mesh geometry={geoDorso} position={[0, 0, -D / 2 - 0.0015]} rotation={[0, Math.PI, 0]}>
-        <meshPhysicalMaterial ref={dorso} color="#C0C0C8" emissive="#C0C0C8" emissiveIntensity={0.22} metalness={0.25} roughness={0.3} clearcoat={1} clearcoatRoughness={0.1} envMapIntensity={1.2} />
-      </mesh>
-      {/* meseta de cámaras (en el dorso, arriba a la izquierda vista desde atrás) */}
-      <RoundedBox args={[0.38, 0.38, 0.03]} radius={0.075} smoothness={6} position={[0.17, 0.56, -D / 2 - 0.014]}>
-        <meshPhysicalMaterial color="#2a2a30" metalness={0.9} roughness={0.15} clearcoat={1} />
-      </RoundedBox>
-      {lente(0.1, 0.64)}
-      {lente(0.1, 0.48)}
-      {lente(0.25, 0.56)}
-      <mesh position={[0.26, 0.69, -D / 2 - 0.031]}>
-        <sphereGeometry args={[0.018, 16, 16]} />
-        <meshStandardMaterial color="#fff6e0" emissive="#fff1cc" emissiveIntensity={0.4} />
-      </mesh>
-      {/* botones laterales */}
-      <RoundedBox args={[0.012, 0.2, 0.03]} radius={0.005} position={[W / 2 + 0.004, 0.3, 0]}>
-        <meshPhysicalMaterial color="#b8b8c0" metalness={1} roughness={0.25} />
-      </RoundedBox>
-      <RoundedBox args={[0.012, 0.13, 0.03]} radius={0.005} position={[-W / 2 - 0.004, 0.38, 0]}>
-        <meshPhysicalMaterial color="#b8b8c0" metalness={1} roughness={0.25} />
-      </RoundedBox>
-      <RoundedBox args={[0.012, 0.13, 0.03]} radius={0.005} position={[-W / 2 - 0.004, 0.2, 0]}>
-        <meshPhysicalMaterial color="#b8b8c0" metalness={1} roughness={0.25} />
-      </RoundedBox>
+      <group rotation={[0, giro, 0]} scale={escala}>
+        <primitive object={modelo} position={[-centro.x, -centro.y, -centro.z]} />
+      </group>
     </group>
   );
 }
@@ -254,7 +240,9 @@ export default function Escena3D({ mobile, activa }: { mobile: boolean; activa: 
       <ambientLight intensity={0.15} />
       <directionalLight position={[-3, 2, 4]} intensity={1.2} color="#dfe9ff" />
       <pointLight position={[0, 0, -2]} intensity={6} color="#1E7FFF" distance={6} />
-      <Celular mobile={mobile} />
+      <Suspense fallback={null}>
+        <Celular mobile={mobile} />
+      </Suspense>
       <Polvo cantidad={mobile ? 320 : 650} />
     </Canvas>
   );
