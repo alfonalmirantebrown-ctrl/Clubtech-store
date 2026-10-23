@@ -46,9 +46,9 @@ export default async function EstantePage({ params }: Params) {
         </nav>
 
         <header className="mb-10 flex flex-col gap-4 md:mb-12 md:flex-row md:items-end md:justify-between">
-          <h1 className="text-[clamp(48px,9vw,140px)] font-display font-extrabold uppercase leading-[0.84] tracking-[-0.028em] text-white">
+          <h1 className="text-[clamp(34px,6vw,92px)] font-display font-extrabold uppercase leading-[0.84] tracking-[-0.028em] text-white">
             {marca.nombre}
-            <span className="block font-serif text-[0.46em] font-normal normal-case italic tracking-[-0.02em]" style={{ color: 'var(--zone-accent)' }}>
+            <span className="block font-sans font-light text-[0.46em] font-normal normal-case tracking-[-0.02em]" style={{ color: 'var(--zone-accent)' }}>
               {categoria.nombre.toLowerCase()}
             </span>
           </h1>

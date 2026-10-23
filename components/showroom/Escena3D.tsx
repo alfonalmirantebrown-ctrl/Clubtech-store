@@ -71,7 +71,7 @@ function usePantalla() {
       ctx.textAlign = 'center';
       ctx.font = `500 26px ${mono}`;
       ctx.fillText(fecha.format(new Date()), c.width / 2, 170);
-      ctx.font = `800 168px ${display}`;
+      ctx.font = `700 118px ${display}`;
       ctx.fillText(hora.format(new Date()), c.width / 2, 330);
       ctx.font = `600 22px ${mono}`;
       ctx.fillStyle = 'rgba(255,255,255,0.55)';

@@ -124,8 +124,8 @@ export default function Vitrina({ producto }: { producto: ProductoCompleto }) {
           <Link href={`/catalogo/${categoria.slug}/${marca.slug}`} className="hover:text-off-white">{marca.nombre}</Link>
         </nav>
 
-        <h1 className="font-display text-[clamp(44px,6vw,96px)] font-extrabold leading-[0.88] tracking-[-0.025em] text-white">{producto.nombre}</h1>
-        {producto.tagline && <p className="mt-5 max-w-[24ch] font-serif text-[26px] italic leading-[1.1] text-off-white md:text-[34px]">{producto.tagline}</p>}
+        <h1 className="font-display text-[clamp(32px,4.2vw,64px)] font-extrabold leading-[0.88] tracking-[-0.025em] text-white">{producto.nombre}</h1>
+        {producto.tagline && <p className="mt-5 max-w-[24ch] font-sans font-light text-[26px] leading-[1.1] text-off-white md:text-[34px]">{producto.tagline}</p>}
         {producto.descripcion && <p className="mt-4 max-w-[46ch] text-[15px] leading-relaxed text-off-white/60">{producto.descripcion}</p>}
 
         <div className="mt-10 space-y-6">
@@ -160,7 +160,7 @@ export default function Vitrina({ producto }: { producto: ProductoCompleto }) {
 
         <div className="mt-10 flex flex-col gap-5 border-t border-line pt-6 sm:flex-row sm:items-end sm:justify-between">
           <div>
-            <p className="font-display text-[44px] font-bold leading-none tracking-[-0.018em] text-white">{formatUSD(variante?.precio_usd ?? null)}</p>
+            <p className="font-display text-[34px] font-bold leading-none tracking-[-0.018em] text-white">{formatUSD(variante?.precio_usd ?? null)}</p>
             <p className="mt-2 font-mono text-[11px] uppercase tracking-[0.14em] text-grey-dim">
               {sinStock ? 'Sin stock · consultá ingreso' : 'En stock · listo para entregar'}
             </p>

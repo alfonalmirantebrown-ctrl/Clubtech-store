@@ -62,21 +62,12 @@ Clubtech Store es un e-commerce premium de tecnología para Argentina. Venden ce
 
 ## Tipografía
 
-**EN REVISIÓN:** a Joaquín no le gustó el Combo 1. Se le mostró un muestrario con 4 direcciones (A Geist + Geist Mono · B Big Shoulders + Figtree · C Archivo Expanded + Inter Tight · D Unbounded + Manrope); falta que elija. Hasta entonces sigue el Combo 1.
+**DECIDIDO (Joaquín eligió A + D del muestrario):**
 
-- Display (titulares, CLUBTECH, categorías, marcas, modelos, precio): **Bricolage Grotesque**, clase `font-display`, condensada al 86% (`font-stretch`) y con tracking -0.02/-0.03em
-- Acento editorial (taglines, frases en cursiva): **Instrument Serif** italic, clase `font-serif`
-- Texto: **Mona Sans** (archivo propio en `app/fonts/`, Next 14 no la trae), clase `font-sans`
-- Etiquetas técnicas: **Geist Mono** (paquete `geist`), clase `font-mono`
-
-Opciones que se evaluaron:
-
-- Combo 1 · Bricolage Grotesque + Mona Sans + Instrument Serif + Geist Mono
-- Combo 2 · Geist (todo) + Instrument Serif
-- Combo 3 · Big Shoulders + Figtree + Reddit Sans + Geist Mono
-- Combo 4 · Archivo Black + Inter + Instrument Serif + JetBrains Mono
-
-NO usar Space Grotesk + Fraunces (es la pairing AI-default más obvia).
+- Display (titulares, CLUBTECH, categorías, marcas, modelos, precio): **Unbounded**, clase `font-display`. Es muy ancha: los tamaños de titulares están calculados para ella (ej. CLUBTECH del hero `13.2vw` desktop / `12.6vw` mobile). Si se agrega un titular nuevo, probar que no desborde.
+- Texto y frases destacadas: **Geist** (paquete `geist`), clase `font-sans`. Las frases que antes iban en serif itálica ahora son Geist `font-light`, sin cursiva.
+- Etiquetas técnicas: **Geist Mono** (paquete `geist`), clase `font-mono`.
+- Descartadas: Combo 1 (Bricolage + Mona Sans + Instrument Serif), Big Shoulders, Archivo Expanded. NO usar Space Grotesk + Fraunces.
 
 ## Supabase
 
@@ -255,7 +246,7 @@ Nota: aunque caveman esté activo, las explicaciones a Joaquín siguen siendo en
 - [x] Nivel 3 Estante
 - [x] Nivel 4 Vitrina del Producto
 - [x] SVG fallbacks por categoría (mientras no hay fotos)
-- [x] Decidir tipografía final (Combo 1)
+- [x] Decidir tipografía final (Unbounded + Geist + Geist Mono)
 - [x] Micro-interacciones custom (showroom 3D, polvo que sigue al mouse, botón magnético, sonido ambiente)
 - [x] Easter egg (tipear "clubh" en cualquier página)
 - [ ] Fotos de productos (upload manual a bucket productos cuando estén)

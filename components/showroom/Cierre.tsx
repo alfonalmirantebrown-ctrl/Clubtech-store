@@ -52,11 +52,11 @@ export default function Cierre() {
         style={{ background: 'radial-gradient(closest-side, rgba(0,64,240,0.28), transparent)' }}
       />
       <div className="relative mx-auto grid max-w-[1600px] gap-16 md:grid-cols-12">
-        <h2 className="font-display text-[clamp(56px,9vw,150px)] font-extrabold uppercase leading-[0.84] tracking-[-0.03em] text-white md:col-span-8">
+        <h2 className="font-display text-[clamp(34px,5.6vw,96px)] font-extrabold uppercase leading-[0.84] tracking-[-0.03em] text-white md:col-span-8">
           Sin carrito.
           <br />
           Sin formulario.
-          <span className="mt-2 block font-serif text-[0.7em] font-normal normal-case italic tracking-[-0.01em] text-blue-glow">
+          <span className="mt-2 block font-sans font-light text-[0.7em] font-normal normal-case tracking-[-0.01em] text-blue-glow">
             Un mensaje y listo.
           </span>
         </h2>

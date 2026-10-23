@@ -86,7 +86,7 @@ export default function GaleriaMarcas({ categoria, items }: { categoria: string;
               </ul>
               <h2
                 className="font-display font-extrabold uppercase leading-[0.86] tracking-[-0.025em] text-white"
-                style={{ fontSize: 'clamp(32px, 12.5cqi, 72px)' }}
+                style={{ fontSize: 'clamp(22px, 8.4cqi, 50px)' }}
               >
                 {marca.nombre}
               </h2>

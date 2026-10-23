@@ -67,7 +67,7 @@ function CardSala({ sala, n }: { sala: Sala; n: number }) {
       <div className="relative">
         <h3
           className="font-display font-extrabold uppercase leading-[0.86] tracking-[-0.025em] text-white"
-          style={{ fontSize: grande ? 'clamp(48px, 13cqi, 180px)' : 'clamp(32px, 11cqi, 84px)' }}
+          style={{ fontSize: grande ? 'clamp(36px, 10.5cqi, 150px)' : 'clamp(22px, 7.4cqi, 58px)' }}
         >
           {categoria.nombre}
         </h3>
@@ -84,9 +84,9 @@ export default function Vestibulo({ salas }: { salas: Sala[] }) {
   return (
     <section id="vestibulo" className="scroll-mt-14 bg-black px-3 pb-24 pt-20 md:px-5 md:pt-28">
       <header className="mx-auto mb-10 flex max-w-[1600px] items-end justify-between gap-6 px-2 md:mb-14">
-        <h2 className="max-w-[16ch] font-display text-[clamp(30px,4.4vw,60px)] font-bold leading-[0.95] tracking-[-0.02em] text-white">
+        <h2 className="max-w-[16ch] font-display text-[clamp(24px,3vw,42px)] font-bold leading-[0.95] tracking-[-0.02em] text-white">
           Siete categorías.{' '}
-          <em className="font-serif font-normal italic tracking-[-0.01em] text-off-white/70">Elegí por dónde arrancar.</em>
+          <em className="not-italic font-sans font-light font-normal tracking-[-0.01em] text-off-white/70">Elegí por dónde arrancar.</em>
         </h2>
         <p className="hidden font-mono text-[11px] uppercase tracking-[0.14em] text-grey-dim md:block">Catálogo</p>
       </header>

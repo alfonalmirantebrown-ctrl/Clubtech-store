@@ -150,7 +150,7 @@ export default function Showroom({ pieza }: Props) {
         {/* la palabra gigante, detrás de la pieza */}
         <div data-palabra className="absolute inset-x-0 bottom-[20%] px-5 md:bottom-[16%] md:px-8">
           <div className="mx-auto max-w-[1600px]">
-            <FloatingWord className="-ml-[0.04em] whitespace-nowrap text-[21vw] md:text-[clamp(72px,24.5vw,380px)]" />
+            <FloatingWord className="-ml-[0.04em] whitespace-nowrap text-[12.6vw] md:text-[clamp(56px,13.2vw,206px)]" />
           </div>
         </div>
 
@@ -169,7 +169,7 @@ export default function Showroom({ pieza }: Props) {
         <div data-acto="0" className="absolute inset-0 px-5 pt-24 md:px-8 md:pt-28">
           <div className="mx-auto flex h-full max-w-[1600px] flex-col">
             <div className="flex items-start justify-between gap-6">
-              <p className="max-w-[17ch] font-serif text-[24px] italic leading-[1.05] text-off-white md:text-[34px]">
+              <p className="max-w-[17ch] font-sans font-light text-[24px] leading-[1.05] text-off-white md:text-[34px]">
                 Lo último en celulares, tablets y consolas. Precio en dólares, sin vueltas.
               </p>
             </div>
@@ -204,9 +204,9 @@ export default function Showroom({ pieza }: Props) {
             <div data-acto="1" className="invisible absolute inset-0 flex items-end px-5 pb-16 md:items-center md:justify-end md:px-8 md:pb-0">
               <div className="max-w-[460px] md:mr-[4vw] md:text-right">
                 <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-blue-glow">01 — Cámara</p>
-                <h2 className="mt-3 font-display text-[clamp(56px,8vw,128px)] font-extrabold uppercase leading-[0.84] tracking-[-0.03em] text-white">
+                <h2 className="mt-3 font-display text-[clamp(40px,5.4vw,84px)] font-extrabold uppercase leading-[0.84] tracking-[-0.03em] text-white">
                   Mirala
-                  <span className="block font-serif text-[0.62em] font-normal normal-case italic tracking-[-0.01em] text-off-white">de cerca.</span>
+                  <span className="block font-sans font-light text-[0.62em] font-normal normal-case tracking-[-0.01em] text-off-white">de cerca.</span>
                 </h2>
                 <p className="mt-6 text-[15px] leading-relaxed text-off-white/70 md:ml-auto md:max-w-[36ch]">
                   Como en el local: la das vuelta, mirás la cámara, la sentís en la mano. Solo que acá no hacés la cola.
@@ -222,12 +222,12 @@ export default function Showroom({ pieza }: Props) {
                 </p>
                 <h2
                   key={c?.color}
-                  className="color-entra mt-3 font-display text-[clamp(64px,11vw,190px)] font-extrabold uppercase leading-[0.82] tracking-[-0.03em]"
+                  className="color-entra mt-3 font-display text-[clamp(44px,7vw,120px)] font-extrabold uppercase leading-[0.82] tracking-[-0.03em]"
                   style={{ color: c?.hex ?? '#fff', textShadow: `0 0 80px ${c?.hex ?? '#fff'}55` }}
                 >
                   {c?.color}
                 </h2>
-                <p className="mt-4 font-serif text-[26px] italic text-off-white md:text-[34px]">El color lo elegís vos.</p>
+                <p className="mt-4 font-sans font-light text-[26px] text-off-white md:text-[34px]">El color lo elegís vos.</p>
                 <div className="mt-6 flex items-center gap-4 font-mono text-[11px] uppercase tracking-[0.14em] text-grey-dim">
                   <span className="flex gap-2">
                     {pieza.colores.map((x, i) => (
@@ -249,10 +249,10 @@ export default function Showroom({ pieza }: Props) {
             <div data-acto="3" className="invisible absolute inset-0 flex items-center px-5 md:px-8">
               <div className="mx-auto w-full max-w-[1600px]">
                 <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-blue-glow">03 — Catálogo</p>
-                <h2 className="mt-4 max-w-[14ch] font-display text-[clamp(52px,8vw,140px)] font-extrabold uppercase leading-[0.86] tracking-[-0.03em] text-white">
+                <h2 className="mt-4 max-w-[14ch] font-display text-[clamp(36px,5.4vw,92px)] font-extrabold uppercase leading-[0.86] tracking-[-0.03em] text-white">
                   No solo celulares.
                 </h2>
-                <p className="mt-6 max-w-[34ch] font-serif text-[24px] italic leading-[1.15] text-off-white md:text-[32px]">
+                <p className="mt-6 max-w-[34ch] font-sans font-light text-[24px] leading-[1.15] text-off-white md:text-[32px]">
                   Tablets, laptops, relojes, consolas, audio y accesorios. Si algo te gusta, <span className="text-blue-glow">escribinos.</span>
                 </p>
               </div>

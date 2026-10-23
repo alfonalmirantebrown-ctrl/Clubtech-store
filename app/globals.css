@@ -44,11 +44,6 @@ body {
   outline-offset: 3px;
 }
 
-/* Bricolage un poco condensada y con óptica de titular: más carácter, menos "default" */
-.font-display {
-  font-stretch: 86%;
-  font-optical-sizing: auto;
-}
 
 /* Lenis */
 html.lenis, html.lenis body { height: auto; }
