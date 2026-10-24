@@ -3,7 +3,7 @@ import Cierre from '@/components/showroom/Cierre';
 import Showroom from '@/components/showroom/Showroom';
 import { getCatalogo } from '@/lib/catalogo';
 import type { ColorPieza } from '@/lib/escena';
-import { fotoDe } from '@/lib/fotos';
+import { fotoDe, fotoDeCategoria } from '@/lib/fotos';
 import { esOpcion } from '@/lib/variantes';
 
 export const revalidate = 600;
@@ -13,9 +13,9 @@ export default async function Home() {
   const salas = categorias.map((categoria) => {
     const items = productos.filter((p) => p.categoria_id === categoria.id);
     const precios = items.map((p) => p.precioDesde).filter((x): x is number => x != null);
-    // foto de la sala: la del producto héroe si tiene, si no la primera que haya
+    // foto de la card: la propia de la categoría; si no, la del producto héroe; si no, la primera que haya
     const hero = items.find((p) => p.slug === categoria.hero_product_slug);
-    const foto = (hero && fotoDe(hero)) ?? items.map(fotoDe).find(Boolean) ?? null;
+    const foto = fotoDeCategoria(categoria.slug) ?? (hero && fotoDe(hero)) ?? items.map(fotoDe).find(Boolean) ?? null;
     return { categoria, piezas: items.length, desde: precios.length ? Math.min(...precios) : null, foto };
   });
 

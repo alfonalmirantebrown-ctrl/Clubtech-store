@@ -1,14 +1,26 @@
+import locales from './fotos-locales.json';
 import type { Producto } from './types';
 
-export type Foto = { src: string; credito?: string; demo?: boolean };
+/** ajuste: 'contain' = producto recortado sobre negro (se ve entero); 'cover' = foto de ambiente (llena el cuadro) */
+export type Foto = { src: string; credito?: string; demo?: boolean; ajuste?: 'cover' | 'contain' };
+
+/*
+  De dónde sale la foto de cada producto, en este orden:
+  1. productos.image_url en Supabase (si algún día se cargan ahí)
+  2. public/productos/{slug}.png|jpg|webp — la forma fácil: subir el archivo al repo y listo
+  3. la foto de MUESTRA de abajo
+  Si no hay ninguna, se ve el espacio vacío "Foto en camino".
+  Ver FOTOS.md para cómo nombrar y subir las fotos.
+*/
+const LOCALES: { productos: Record<string, string>; categorias: Record<string, string> } = locales;
 
 const WM = 'https://upload.wikimedia.org/wikipedia/commons/thumb';
 
 /*
   FOTOS DE MUESTRA (temporales).
   Fotos reales con licencia libre de Wikimedia Commons, para mostrar cómo se ve el sitio con fotos.
-  Cuando Clubtech mande las suyas se cargan en Supabase (columna image_url) y estas dejan de usarse:
-  image_url siempre tiene prioridad. Para sacar la muestra entera, vaciar este objeto.
+  Apenas un modelo tiene su foto real (en public/productos o en image_url), la muestra deja de usarse.
+  Para sacar la muestra entera, vaciar este objeto.
 */
 const DEMO: Record<string, Foto> = {
   'iphone-17-pro-max': {
@@ -34,7 +46,15 @@ const DEMO: Record<string, Foto> = {
 };
 
 export function fotoDe(p: Pick<Producto, 'slug' | 'image_url'>): Foto | null {
-  if (p.image_url) return { src: p.image_url };
+  if (p.image_url) return { src: p.image_url, ajuste: 'contain' };
+  const local = LOCALES.productos[p.slug];
+  if (local) return { src: local, ajuste: 'contain' };
   const demo = DEMO[p.slug];
-  return demo ? { ...demo, demo: true } : null;
+  return demo ? { ...demo, demo: true, ajuste: 'cover' } : null;
+}
+
+/** foto propia de la categoría (public/categorias/{slug}.jpg), para la card del inicio */
+export function fotoDeCategoria(slug: string): Foto | null {
+  const local = LOCALES.categorias[slug];
+  return local ? { src: local, ajuste: 'cover' } : null;
 }

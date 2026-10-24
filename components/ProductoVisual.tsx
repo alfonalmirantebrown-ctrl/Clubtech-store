@@ -55,7 +55,7 @@ export default function ProductoVisual({ nombre, foto, tinte, priority, sizes = 
             // las fotos de muestra vienen de Wikimedia: el navegador las pide directo
             unoptimized={foto.demo}
             onError={() => setRota(true)}
-            className="object-cover"
+            className={foto.ajuste === 'contain' ? 'object-contain' : 'object-cover'}
           />
           {foto.demo && (
             <span className="absolute left-2 top-2 bg-black/70 px-1.5 py-0.5 font-mono text-[9px] uppercase tracking-[0.14em] text-off-white/80">

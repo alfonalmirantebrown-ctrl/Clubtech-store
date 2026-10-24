@@ -235,7 +235,7 @@ Nota: aunque caveman esté activo, las explicaciones a Joaquín siguen siendo en
 - En las variantes, `"Default"` en memoria/color significa "no aplica" y no se muestra como opción.
 - Categorías con una sola marca (laptops, smartwatches, audio) saltan directo del Vestíbulo al Estante.
 - La intro del hero se ve una vez por sesión del navegador; con `prefers-reduced-motion` se saltea.
-- Fotos de producto (`lib/fotos.ts`): se usa `productos.image_url` de Supabase. Si está vacío, se usa una foto de MUESTRA (5 modelos, fotos libres de Wikimedia, con badge "Muestra" y crédito). Si no hay ninguna, se ve un espacio vacío con marcas de corte ("Foto en camino"). Cuando lleguen las fotos reales: subirlas al bucket `productos`, poner la URL en `image_url` y vaciar el objeto `DEMO` de `lib/fotos.ts`.
+- Fotos (`lib/fotos.ts`, guía completa en `FOTOS.md`): prioridad `productos.image_url` > archivo en `public/productos/{slug}.png|jpg|webp` > foto de MUESTRA (Wikimedia, badge "Muestra") > espacio vacío "Foto en camino". Categorías: `public/categorias/{slug}.jpg` (si no hay, usa la foto del producto héroe). `scripts/fotos-manifest.mjs` corre solo en `prebuild`/`predev` y arma `lib/fotos-locales.json`: alcanza con subir el archivo al repo. Productos se muestran con `object-contain` (enteros), categorías y muestras con `object-cover`.
 - Fotos ideales del cliente: PNG o JPG de al menos 1600px de alto, producto solo, fondo negro o transparente, mismo ángulo en todos los modelos, nombradas con el slug del producto (ej: `iphone-17-pro.png`).
 - Supabase pausa el proyecto gratis si no se usa: si el sitio no trae datos, revisar que esté activo.
 
@@ -252,7 +252,8 @@ Nota: aunque caveman esté activo, las explicaciones a Joaquín siguen siendo en
 - [x] Decidir tipografía final (Unbounded + Geist + Geist Mono)
 - [x] Micro-interacciones custom (showroom 3D, polvo que sigue al mouse, botón magnético, sonido ambiente)
 - [x] Easter egg (tipear "clubh" en cualquier página)
-- [ ] Fotos de productos (upload manual a bucket productos cuando estén)
+- [x] Sistema de fotos por archivo (`public/productos`, `public/categorias`, ver `FOTOS.md`)
+- [ ] Subir las fotos reales de Clubtech (61 productos + 7 categorías)
 - [x] Compra por WhatsApp (CTA primary)
 - [ ] Cargar `NEXT_PUBLIC_WHATSAPP_NUMBER` (número de Clubtech) en `.env.local` y en Vercel
 - [x] Isotipo: `public/brand/logo-isotipo.jpeg` (original de Joaquín) → `logo-isotipo.png` con fondo transparente (es el que usa la web)

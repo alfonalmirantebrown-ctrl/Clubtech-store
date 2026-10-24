@@ -3,10 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "predev": "node scripts/fotos-manifest.mjs",
     "dev": "next dev",
+    "prebuild": "node scripts/fotos-manifest.mjs",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "fotos": "node scripts/fotos-manifest.mjs"
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",
