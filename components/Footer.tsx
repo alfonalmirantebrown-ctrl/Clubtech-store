@@ -7,7 +7,6 @@ export default function Footer() {
       <div className="mx-auto flex max-w-[1600px] flex-col gap-6 md:flex-row md:items-end md:justify-between">
         <div>
           <p className="text-off-white">Clubtech Store</p>
-          <p>Tecnología premium · Argentina</p>
         </div>
         <div className="flex gap-6">
           <Link href="/" className="hover:text-off-white">Inicio</Link>

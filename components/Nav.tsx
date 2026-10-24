@@ -2,42 +2,13 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useEffect, useState } from 'react';
 import { useFaseIntro } from '@/lib/intro';
 import { linkWhatsApp } from '@/lib/whatsapp';
 import { Isotipo } from './Logo';
-import Sonido from './Sonido';
-
-// Dónde estás, en una línea: sección + detalle.
-function ubicacion(path: string) {
-  const partes = path.split('/').filter(Boolean);
-  if (partes[0] === 'catalogo' && partes.length === 2) return ['Catálogo', partes[1], ''];
-  if (partes[0] === 'catalogo' && partes.length === 3) return ['Catálogo', partes[1], partes[2]];
-  if (partes[0] === 'producto') return ['Modelo', partes[1]?.replace(/-/g, ' '), ''];
-  return ['Clubtech', 'Store', 'Argentina'];
-}
-
-function Reloj() {
-  const [hora, setHora] = useState<string | null>(null);
-  useEffect(() => {
-    const fmt = new Intl.DateTimeFormat('es-AR', {
-      hour: '2-digit',
-      minute: '2-digit',
-      hourCycle: 'h23',
-      timeZone: 'America/Argentina/Buenos_Aires',
-    });
-    const tick = () => setHora(fmt.format(new Date()));
-    tick();
-    const id = setInterval(tick, 15_000);
-    return () => clearInterval(id);
-  }, []);
-  return <span suppressHydrationWarning>BUE {hora ?? '--:--'}</span>;
-}
 
 export default function Nav() {
   const path = usePathname();
   const fase = useFaseIntro();
-  const [nivel, sala, detalle] = ubicacion(path);
   // En la home, el isotipo aparece cuando la intro lo deposita (fase 3)
   const mostrarIsotipo = path !== '/' || fase === 'terminada';
 
@@ -52,19 +23,7 @@ export default function Nav() {
           </span>
         </Link>
 
-        <div className="flex min-w-0 items-baseline gap-3 font-mono text-[11px] uppercase tracking-[0.14em]">
-          <span className="text-blue-tech">{nivel}</span>
-          <span className="text-off-white">{sala}</span>
-          {detalle && <span className="hidden truncate text-grey-dim sm:inline">— {detalle}</span>}
-        </div>
-
         <div className="ml-auto flex items-center gap-6 font-mono text-[11px] uppercase tracking-[0.14em]">
-          <span className="hidden text-grey-dim md:inline">
-            <Reloj />
-          </span>
-          <span className="hidden sm:inline">
-            <Sonido />
-          </span>
           <a
             href={linkWhatsApp('Hola Clubtech! Estoy mirando la web y tengo una consulta.')}
             target="_blank"

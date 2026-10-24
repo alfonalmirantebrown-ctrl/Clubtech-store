@@ -4,7 +4,6 @@ import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import dynamic from 'next/dynamic';
-import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
 import FloatingWord from '@/components/hero/FloatingWord';
 import Intro from '@/components/hero/Intro';
@@ -106,7 +105,6 @@ export default function Showroom({ pieza }: Props) {
       // la duración total del timeline es 1 = todo el recorrido del showroom
       tl.set({}, {}, 1)
         .to('[data-acto="0"]', { autoAlpha: 0, y: -40, duration: 0.08 }, 0.1)
-        .to('[data-indicador]', { autoAlpha: 0, duration: 0.04 }, 0.04)
         .to('[data-palabra]', { opacity: 0, scale: 0.96, duration: 0.12 }, 0.01)
         .fromTo('[data-acto="1"]', { autoAlpha: 0, y: 50 }, { autoAlpha: 1, y: 0, duration: 0.07 }, 0.2)
         .to('[data-acto="1"]', { autoAlpha: 0, y: -40, duration: 0.05 }, 0.38)
@@ -130,20 +128,15 @@ export default function Showroom({ pieza }: Props) {
       <div className="sticky top-0 h-[100svh] overflow-hidden">
         <Intro />
 
-        {/* aura: rayos de luz que salen de detrás de la pieza */}
+        {/* resplandor detrás del celular: luz tenue, blanca y plateada, como humo iluminado */}
         <div aria-hidden className="pointer-events-none absolute inset-0" style={{ opacity: 'var(--aura, 1)' }}>
           <div
-            className="aura-rayos absolute top-1/2 aspect-square w-[150vmax] -translate-x-1/2 -translate-y-1/2"
-            style={{ left: 'var(--ax)', transition: 'left 0.6s cubic-bezier(0.22,1,0.36,1)' }}
+            className="aura-humo absolute top-1/2 aspect-[4/5] w-[95vmin] -translate-x-1/2 -translate-y-1/2"
+            style={{ left: 'var(--ax)', transition: 'left 0.8s cubic-bezier(0.22,1,0.36,1)' }}
           />
           <div
-            className="absolute top-1/2 aspect-square w-[70vmin] -translate-x-1/2 -translate-y-1/2 rounded-full"
-            style={{
-              left: 'var(--ax)',
-              transition: 'left 0.6s cubic-bezier(0.22,1,0.36,1)',
-              background: 'radial-gradient(closest-side, rgba(30,127,255,0.45), rgba(0,64,240,0.12) 55%, transparent)',
-              filter: 'blur(10px)',
-            }}
+            className="aura-destello absolute top-1/2 aspect-square w-[42vmin] -translate-x-1/2 -translate-y-1/2 rounded-full"
+            style={{ left: 'var(--ax)', transition: 'left 0.8s cubic-bezier(0.22,1,0.36,1)' }}
           />
         </div>
 
@@ -170,31 +163,10 @@ export default function Showroom({ pieza }: Props) {
           <div className="mx-auto flex h-full max-w-[1600px] flex-col">
             <div className="flex items-start justify-between gap-6">
               <p className="max-w-[17ch] font-sans font-light text-[24px] leading-[1.05] text-off-white md:text-[34px]">
-                Lo último en celulares, tablets y consolas. Precio en dólares, sin vueltas.
+                Lo último en celulares, tablets y consolas. Precio en dólares.
               </p>
             </div>
 
-            {/* etiqueta del producto en el hero */}
-            <Link
-              href={`/producto/${pieza.slug}`}
-              className="group pointer-events-auto absolute hidden font-mono text-[11px] uppercase leading-relaxed tracking-[0.14em] md:block"
-              style={{ left: 'calc(var(--ax) - 26vw)', top: '42%' }}
-            >
-              <span className="flex items-center gap-3">
-                <span className="text-blue-glow">Destacado</span>
-                <span className="h-px w-16 bg-off-white/30 transition-[width] duration-500 group-hover:w-24" />
-              </span>
-              <span className="block text-off-white">{pieza.nombre}</span>
-              <span className="block text-grey-dim">Desde {formatUSD(pieza.desde)}</span>
-              <span className="mt-1 block text-grey-dim transition-colors group-hover:text-off-white">Ver modelo →</span>
-            </Link>
-
-            <div className="mt-auto flex flex-col gap-3 pb-8 font-mono text-[11px] uppercase tracking-[0.16em] md:flex-row md:items-end md:justify-between md:pb-10 md:text-[12px]">
-              <p className="max-w-[34ch] text-off-white">— Tu próxima pieza de tecnología empieza acá</p>
-              <p className="text-grey-dim">
-                <span className="text-blue-tech">Store</span> · Argentina
-              </p>
-            </div>
           </div>
         </div>
 
@@ -260,15 +232,6 @@ export default function Showroom({ pieza }: Props) {
           </>
         )}
 
-        {/* indicador de recorrido */}
-        {!reducido && (
-          <div data-indicador aria-hidden className="absolute right-5 top-1/2 hidden -translate-y-1/2 flex-col items-center gap-3 font-mono text-[10px] uppercase tracking-[0.16em] text-grey-dim md:right-8 md:flex">
-            <span>Scroll</span>
-            <span className="relative h-10 w-px overflow-hidden bg-line">
-              <span className="scroll-hint absolute inset-x-0 top-0 h-3 bg-off-white" />
-            </span>
-          </div>
-        )}
       </div>
     </section>
   );

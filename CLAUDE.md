@@ -123,9 +123,10 @@ En CLUBTECH flotante, al hover:
 Narrativa scroll de 5 actos dentro de un escenario fijo (`components/showroom/`), inspirada en la skill `ubernatural-style`:
 
 - **Pieza central 3D** (`Escena3D.tsx`): modelo 3D real del iPhone 17 Pro (ver abajo), con pantalla de bloqueo que muestra la hora real de Buenos Aires. Estudio de luces con `Lightformer` (sin HDR externo). Polvo en el aire que se junta donde está el mouse.
-- **Aura**: rayos de luz CSS (`.aura-rayos`) que siguen a la pieza; más intensos de noche (hora real de BA).
+- **Luz detrás del celular**: resplandor tenue blanco/plateado tipo humo (`.aura-humo` + `.aura-destello`), sin rayos ni líneas (decisión de Joaquín); más intenso de noche (hora real de BA).
 - **NO usar lenguaje de museo en la web** (decisión de Joaquín): nada de "salas", "piezas", "exhibición", "vitrina", "vestíbulo" ni datos tipo "Salas 07 / Piezas 61 / Moneda USD" de cara al visitante. Los nombres internos del código (Vestibulo, Estante, Vitrina) pueden quedar.
-- **01** · llegada: frase en serif ("Lo último en celulares, tablets y consolas. Precio en dólares, sin vueltas."), CLUBTECH gigante detrás del celular, etiqueta "Destacado" con el producto héroe de Celulares y su precio real.
+- **01** · llegada: frase "Lo último en celulares, tablets y consolas. Precio en dólares." y CLUBTECH gigante. Nada más.
+- **Sin elementos decorativos alrededor** (decisión de Joaquín): sacados "Store · Argentina", "— Tu próxima pieza de tecnología empieza acá", reloj "BUE", botón de sonido, indicador "Scroll", etiqueta "Destacado" y la ubicación en la nav. La nav es solo isotipo + WhatsApp. No volver a agregarlos.
 - Al llegar, el celular aparece **detrás** de CLUBTECH (palabra `z-10`, canvas debajo). Apenas se empieza a scrollear, CLUBTECH se desvanece del todo y el celular queda adelante.
 - **Los textos de cada momento se alternan de lado** (decisión de Joaquín): 01 izquierda → 02 derecha → 03 izquierda; el celular siempre se ubica del lado contrario (`pose` en `lib/escena.ts`).
 - **01 — Cámara** · "Mirala de cerca": el celular gira y muestra la cámara.
@@ -134,7 +135,6 @@ Narrativa scroll de 5 actos dentro de un escenario fijo (`components/showroom/`)
 - **Modelo 3D real** del hero: `public/models/celular.glb` = «iPhone 17 Pro» de **Ranguel** (Sketchfab), licencia **CC BY 4.0** → el crédito en el footer es obligatorio, no sacarlo. Joaquín lo subió como `.usdz` (23,5 MB); se convirtió con `scripts/usdz-a-glb.py` y se optimizó con gltf-transform (WebP 1024 + meshopt) a 2,2 MB. Se carga con `useGLTF(..., false, true)` (meshopt, sin Draco).
 - En `Escena3D.tsx` el modelo se tiñe por nombre de material: `Anodized_aluminum` (cuerpo, color de la variante), `Frosted_glass` (panel trasero, el mismo color 30% más claro). La pantalla es el material `OLED`: se le pone la textura con la hora de BA, espejada porque la pantalla del modelo mira hacia adentro. Los productos a la venta siguen siendo fotos 2D.
 - Después: Vestíbulo y **Cierre** ("Sin carrito. Sin formulario. Un mensaje y listo." + botón magnético a WhatsApp).
-- **Sonido ambiente** opcional (botón en la nav), sintetizado con WebAudio; arranca apagado.
 - Coreografía del celular según el scroll: `lib/escena.ts` (`pose`). Scroll: GSAP ScrollTrigger + Lenis en el mismo ticker (`components/SmoothScroll.tsx`).
 - Fallbacks: sin WebGL → dibujo de línea; `prefers-reduced-motion` → solo el acto 0, sin scroll narrativo.
 

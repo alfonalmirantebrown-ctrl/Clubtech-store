@@ -56,7 +56,7 @@ function usePantalla() {
       ctx.fillText(hora.format(new Date()), c.width / 2, 330);
       ctx.font = `600 22px ${mono}`;
       ctx.fillStyle = 'rgba(255,255,255,0.55)';
-      ctx.fillText('CLUBTECH · STORE', c.width / 2, c.height - 70);
+      ctx.fillText('CLUBTECH', c.width / 2, c.height - 70);
       // la "isla" de la cámara frontal
       ctx.fillStyle = '#000';
       ctx.beginPath();
@@ -239,7 +239,7 @@ export default function Escena3D({ mobile, activa }: { mobile: boolean; activa: 
       </Environment>
       <ambientLight intensity={0.15} />
       <directionalLight position={[-3, 2, 4]} intensity={1.2} color="#dfe9ff" />
-      <pointLight position={[0, 0, -2]} intensity={6} color="#1E7FFF" distance={6} />
+      <pointLight position={[0, 0, -2]} intensity={3} color="#dfe5ee" distance={6} />
       <Suspense fallback={null}>
         <Celular mobile={mobile} />
       </Suspense>
