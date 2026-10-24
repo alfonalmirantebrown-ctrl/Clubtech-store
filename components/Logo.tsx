@@ -33,7 +33,7 @@ export function Isotipo({ size = 32, className = '' }: { size?: number; classNam
     // eslint-disable-next-line @next/next/no-img-element
     <img
       ref={ref}
-      src="/brand/logo-isotipo.jpeg"
+      src="/brand/logo-isotipo.png"
       alt="Clubtech"
       width={size}
       height={size}

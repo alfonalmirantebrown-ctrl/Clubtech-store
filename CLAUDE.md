@@ -255,7 +255,8 @@ Nota: aunque caveman esté activo, las explicaciones a Joaquín siguen siendo en
 - [ ] Fotos de productos (upload manual a bucket productos cuando estén)
 - [x] Compra por WhatsApp (CTA primary)
 - [ ] Cargar `NEXT_PUBLIC_WHATSAPP_NUMBER` (número de Clubtech) en `.env.local` y en Vercel
-- [ ] Subir logos a `/public/brand/` (`logo-tipografico.jpeg`, `logo-isotipo.jpeg`); mientras tanto se ve un reemplazo tipográfico
+- [x] Isotipo: `public/brand/logo-isotipo.jpeg` (original de Joaquín) → `logo-isotipo.png` con fondo transparente (es el que usa la web)
+- [ ] Logo tipográfico (`public/brand/logo-tipografico.jpeg`, lo usa la fase 2 de la intro); mientras tanto se ve "CLUBTECH" en texto
 - [ ] Testing en mobile real
 - [ ] Lighthouse Performance 90+
 - [x] Deploy a Vercel (preview en clubtech-store.vercel.app)
