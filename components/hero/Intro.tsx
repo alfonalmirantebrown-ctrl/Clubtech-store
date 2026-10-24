@@ -4,7 +4,6 @@ import { useAnimate } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import { TypeAnimation } from 'react-type-animation';
 import { setFaseIntro } from '@/lib/intro';
-import { LogoTipografico } from '../Logo';
 
 const VISTA = 'ct-intro-vista';
 const espera = (ms: number) => new Promise((r) => setTimeout(r, ms));
@@ -12,8 +11,8 @@ const espera = (ms: number) => new Promise((r) => setTimeout(r, ms));
 /*
   Intro cinematográfica, 4 fases (ver CLAUDE.md):
   1 · 0-4s  type-on "CLUBTECH" con error humano (CLUBH → borra → CLUBTECH)
-  2 · 4-6s  aparece el logo tipográfico y hace zoom 1 → 8
-  3 · 6-7s  zoom out 8 → 1 y viaja a la nav, donde queda el isotipo de 32px
+  2 · 4-6s  aparece el isotipo de Clubtech y hace zoom 1 → 8
+  3 · 6-7s  zoom out 8 → 1 y viaja a la nav: es el mismo isotipo que queda ahí, a 32px
   4 · fin   se desmonta; queda el hero con CLUBTECH flotante
   Se ve una vez por sesión: si volvés a la home navegando, no se repite.
 */
@@ -63,7 +62,8 @@ export default function Intro() {
           }
         : { x: 0, y: 0, scale: 0.1 };
       animate(fondo, { opacity: 0 }, { duration: 0.5 });
-      await animate(logo, { ...destino, opacity: [1, 1, 0] }, { duration: 0.5, ease: [0.65, 0, 0.35, 1] });
+      // es el mismo logo que vive en la nav: llega a su lugar y la nav lo toma sin corte
+      await animate(logo, destino, { duration: 0.55, ease: [0.65, 0, 0.35, 1] });
       logo.style.willChange = '';
 
       try {
@@ -99,7 +99,8 @@ export default function Intro() {
 
       <div className="absolute inset-0 grid place-items-center">
         <div data-logo style={{ opacity: 0 }}>
-          <LogoTipografico />
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/brand/logo-isotipo.png" alt="" className="block h-auto w-[min(34vmin,240px)]" />
         </div>
       </div>
 

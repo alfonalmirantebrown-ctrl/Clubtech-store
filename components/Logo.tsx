@@ -43,18 +43,3 @@ export function Isotipo({ size = 32, className = '' }: { size?: number; classNam
     />
   );
 }
-
-export function LogoTipografico({ className = '' }: { className?: string }) {
-  const { ref, rota, onError } = useImagenRota();
-  if (rota) {
-    return (
-      <span className={`whitespace-nowrap font-display text-[clamp(22px,4vw,52px)] font-extrabold tracking-[-0.022em] text-white ${className}`}>
-        CLUB<span className="text-blue-tech">TECH</span>
-      </span>
-    );
-  }
-  return (
-    // eslint-disable-next-line @next/next/no-img-element
-    <img ref={ref} src="/brand/logo-tipografico.jpeg" alt="Clubtech" onError={onError} className={`w-[min(70vw,520px)] ${className}`} />
-  );
-}

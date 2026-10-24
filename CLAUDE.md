@@ -104,8 +104,8 @@ apple, samsung, xiaomi, motorola, sony (PlayStation), nintendo, microsoft (Xbox)
 4 fases obligatorias sin skip:
 
 - **Fase 1 (0-4s):** type-on "CLUBTECH" con error humano (tipea CLUBH, borra H, sigue CLUBTECH). Font display 160px desktop.
-- **Fase 2 (4-6s):** aparece logo tipográfico real (archivo en `/public/brand/logo-tipografico.jpeg`), zoom in de scale 1 → 8.
-- **Fase 3 (6-7s):** zoom out scale 8 → 1, logo queda en nav bar como isotipo (`/public/brand/logo-isotipo.jpeg`), 32px.
+- **Fase 2 (4-6s):** aparece el **isotipo** de Clubtech (`/public/brand/logo-isotipo.png`), zoom in de scale 1 → 8. (Decisión de Joaquín: el zoom se hace con el isotipo, no con el nombre.)
+- **Fase 3 (6-7s):** zoom out scale 8 → 1 y el mismo isotipo viaja a la nav, donde queda a 32px (transición continua, sin fundido).
 - **Fase 4 (permanente):** "CLUBTECH" flotante en hero home, cada letra con loop sutil translateY ±3px asíncrono. Debajo: "— TU PRÓXIMA PIEZA DE TECNOLOGÍA EMPIEZA ACÁ" en mono, con "STORE · ARGENTINA" + "STORE" en `--blue-tech`.
 
 ### Micro-interacción pendiente: Glitch RGB sutil
@@ -256,7 +256,6 @@ Nota: aunque caveman esté activo, las explicaciones a Joaquín siguen siendo en
 - [x] Compra por WhatsApp (CTA primary)
 - [ ] Cargar `NEXT_PUBLIC_WHATSAPP_NUMBER` (número de Clubtech) en `.env.local` y en Vercel
 - [x] Isotipo: `public/brand/logo-isotipo.jpeg` (original de Joaquín) → `logo-isotipo.png` con fondo transparente (es el que usa la web)
-- [ ] Logo tipográfico (`public/brand/logo-tipografico.jpeg`, lo usa la fase 2 de la intro); mientras tanto se ve "CLUBTECH" en texto
 - [ ] Testing en mobile real
 - [ ] Lighthouse Performance 90+
 - [x] Deploy a Vercel (preview en clubtech-store.vercel.app)
