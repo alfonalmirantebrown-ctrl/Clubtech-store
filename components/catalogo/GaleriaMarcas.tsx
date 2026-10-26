@@ -40,13 +40,13 @@ export default function GaleriaMarcas({ categoria, items }: { categoria: string;
         role="list"
         aria-label="Marcas"
       >
-        {items.map(({ marca, piezas, precioDesde, modelos, foto }, i) => (
+        {items.map(({ marca, precioDesde, modelos, foto }, i) => (
           <Link
             key={marca.id}
             href={`/catalogo/${categoria}/${marca.slug}`}
             data-card
             role="listitem"
-            className="group relative isolate flex h-[68svh] min-h-[460px] w-[82vw] shrink-0 snap-start flex-col justify-between overflow-hidden border border-line p-6 transition-[border-color] duration-500 hover:border-[color:var(--glow)] focus-visible:border-[color:var(--glow)] md:w-[440px] md:p-8"
+            className="group relative isolate flex h-[68svh] min-h-[460px] w-[82vw] shrink-0 snap-start flex-col justify-end overflow-hidden border border-line p-6 transition-[border-color] duration-500 hover:border-[color:var(--glow)] focus-visible:border-[color:var(--glow)] md:w-[440px] md:p-8"
             style={
               {
                 '--glow': marca.glow ?? 'var(--blue-glow)',
@@ -56,11 +56,6 @@ export default function GaleriaMarcas({ categoria, items }: { categoria: string;
               } as React.CSSProperties
             }
           >
-            <div className="flex justify-between font-mono text-[11px] uppercase tracking-[0.14em] text-grey-dim">
-              <span>{String(i + 1).padStart(2, '0')} / {String(items.length).padStart(2, '0')}</span>
-              <span>{String(piezas).padStart(2, '0')} {piezas === 1 ? 'modelo' : 'modelos'}</span>
-            </div>
-
             <div aria-hidden className="pointer-events-none absolute inset-x-0 top-[16%] mx-auto w-[58%] transition-transform duration-700 ease-out group-hover:-translate-y-2 group-hover:scale-[1.04]">
               <div className="float-glyph" style={{ animationDelay: `${-i * 1.3}s` }}>
                 {foto ? (

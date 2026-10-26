@@ -25,7 +25,6 @@ export default async function SalaDeMarcas({ params }: { params: { categoria: st
   // Una sola marca en la sala: directo al estante, sin un clic de más
   if (marcas.length === 1) redirect(`/catalogo/${categoria.slug}/${marcas[0].marca.slug}`);
 
-  const piezas = marcas.reduce((n, m) => n + m.productos.length, 0);
 
   return (
     <main className="min-h-[100svh] pb-20 pt-28 md:pt-32" style={estiloZona(categoria.slug)}>
@@ -33,12 +32,6 @@ export default async function SalaDeMarcas({ params }: { params: { categoria: st
         <h1 className="text-[clamp(38px,8vw,130px)] font-display font-extrabold uppercase leading-[0.84] tracking-[-0.03em] text-white md:col-span-9">
           {categoria.nombre}
         </h1>
-        <div className="flex flex-col justify-end gap-2 font-mono text-[11px] uppercase tracking-[0.14em] md:col-span-3 md:pb-3 md:text-right">
-          <p className="text-off-white">{categoria.descripcion}</p>
-          <p className="text-grey-dim">
-            {marcas.length} marcas · {piezas} modelos
-          </p>
-        </div>
       </header>
 
       <GaleriaMarcas

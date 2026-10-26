@@ -104,8 +104,8 @@ apple, samsung, xiaomi, motorola, sony (PlayStation), nintendo, microsoft (Xbox)
 4 fases obligatorias sin skip:
 
 - **Fase 1 (0-4s):** type-on "CLUBTECH" con error humano (tipea CLUBH, borra H, sigue CLUBTECH). Font display 160px desktop.
-- **Fase 2 (4-6s):** aparece el **isotipo** de Clubtech (`/public/brand/logo-isotipo.png`), zoom in de scale 1 → 8. (Decisión de Joaquín: el zoom se hace con el isotipo, no con el nombre.)
-- **Fase 3 (6-7s):** zoom out scale 8 → 1 y el mismo isotipo viaja a la nav, donde queda a 32px (transición continua, sin fundido).
+- **Fase 2 (4-6s):** aparece el **isotipo** de Clubtech (`/public/brand/logo-isotipo.png`), zoom in leve de scale 1 → 3.5 (antes 8; Joaquín lo quiso más sutil). (Decisión de Joaquín: el zoom se hace con el isotipo, no con el nombre.)
+- **Fase 3 (6-7s):** zoom out scale 3.5 → 1 y el mismo isotipo viaja a la nav, donde queda a 32px (transición continua, sin fundido).
 - **Fase 4 (permanente):** "CLUBTECH" flotante en hero home, cada letra con loop sutil translateY ±3px asíncrono. Debajo: "— TU PRÓXIMA PIEZA DE TECNOLOGÍA EMPIEZA ACÁ" en mono, con "STORE · ARGENTINA" + "STORE" en `--blue-tech`.
 
 ### Micro-interacción pendiente: Glitch RGB sutil
@@ -128,6 +128,7 @@ Narrativa scroll de 5 actos dentro de un escenario fijo (`components/showroom/`)
 - **01** · llegada: frase "Lo último en celulares, tablets y consolas. Precio en dólares." y CLUBTECH gigante. Nada más.
 - **Sin elementos decorativos alrededor** (decisión de Joaquín): sacados "Store · Argentina", "— Tu próxima pieza de tecnología empieza acá", reloj "BUE", botón de sonido, indicador "Scroll", etiqueta "Destacado" y la ubicación en la nav. La nav es solo isotipo + WhatsApp. No volver a agregarlos.
 - Al llegar, el celular aparece **detrás** de CLUBTECH (palabra `z-10`, canvas debajo). Apenas se empieza a scrollear, CLUBTECH se desvanece del todo y el celular queda adelante.
+- **Sin texto de relleno** (decisión de Joaquín): nada de contadores ("04 modelos", "3 marcas", "01 / 03", "Color 02/05") ni frases poéticas (las `descripcion` de categorías no se muestran; quedan solo como meta description). Mantener lo simple; si hay dudas, sacar de a poco.
 - **Los textos de cada momento se alternan de lado** (decisión de Joaquín): 01 izquierda → 02 derecha → 03 izquierda; el celular siempre se ubica del lado contrario (`pose` en `lib/escena.ts`).
 - **01 — Cámara** · "Mirala de cerca": el celular gira y muestra la cámara.
 - **02 — Color** · "El color lo elegís vos": recorre los colores reales del producto (de `variantes`).

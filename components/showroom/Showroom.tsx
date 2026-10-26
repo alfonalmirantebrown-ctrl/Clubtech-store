@@ -180,9 +180,6 @@ export default function Showroom({ pieza }: Props) {
                   Mirala
                   <span className="block font-sans font-light text-[0.62em] font-normal normal-case tracking-[-0.01em] text-off-white">de cerca.</span>
                 </h2>
-                <p className="mt-6 text-[15px] leading-relaxed text-off-white/70 md:max-w-[36ch]">
-                  Como en el local: la das vuelta, mirás la cámara, la sentís en la mano. Solo que acá no hacés la cola.
-                </p>
               </div>
             </div>
 
@@ -190,7 +187,7 @@ export default function Showroom({ pieza }: Props) {
             <div data-acto="2" className="invisible absolute inset-0 z-20 flex items-end justify-end px-5 pb-16 text-right md:items-center md:px-8 md:pb-0">
               <div className="max-w-[640px] md:mr-[2vw]">
                 <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-grey-dim">
-                  02 — Color {String(color + 1).padStart(2, '0')}/{String(pieza.colores.length).padStart(2, '0')}
+                  02 — Color
                 </p>
                 <h2
                   key={c?.color}

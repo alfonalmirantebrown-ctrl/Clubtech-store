@@ -11,8 +11,8 @@ const espera = (ms: number) => new Promise((r) => setTimeout(r, ms));
 /*
   Intro cinematográfica, 4 fases (ver CLAUDE.md):
   1 · 0-4s  type-on "CLUBTECH" con error humano (CLUBH → borra → CLUBTECH)
-  2 · 4-6s  aparece el isotipo de Clubtech y hace zoom 1 → 8
-  3 · 6-7s  zoom out 8 → 1 y viaja a la nav: es el mismo isotipo que queda ahí, a 32px
+  2 · 4-6s  aparece el isotipo de Clubtech y hace zoom 1 → 3.5 (leve, a pedido de Joaquín)
+  3 · 6-7s  zoom out 3.5 → 1 y viaja a la nav: es el mismo isotipo que queda ahí, a 32px
   4 · fin   se desmonta; queda el hero con CLUBTECH flotante
   Se ve una vez por sesión: si volvés a la home navegando, no se repite.
 */
@@ -45,7 +45,7 @@ export default function Intro() {
 
       await animate(logo, { opacity: [0, 1], scale: 1 }, { duration: 0.45, ease: 'easeOut' });
       logo.style.willChange = 'transform';
-      await animate(logo, { scale: 8 }, { duration: 1.55, ease: [0.7, 0, 0.84, 0] });
+      await animate(logo, { scale: 3.5 }, { duration: 1.55, ease: [0.7, 0, 0.84, 0] });
       if (cancelado) return;
 
       setFase(3);

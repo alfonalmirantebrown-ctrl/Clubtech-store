@@ -99,10 +99,7 @@ export default function Estante({ productos }: { productos: ProductoCompleto[] }
         </div>
       </div>
 
-      <div className="mb-5 flex items-center justify-between font-mono text-[11px] uppercase tracking-[0.14em] text-grey-dim">
-        <span aria-live="polite">
-          {String(visibles.length).padStart(2, '0')} / {String(productos.length).padStart(2, '0')} modelos
-        </span>
+      <div className="mb-5 flex items-center justify-end font-mono text-[11px] uppercase tracking-[0.14em] text-grey-dim">
         {hayFiltros && (
           <button
             type="button"
