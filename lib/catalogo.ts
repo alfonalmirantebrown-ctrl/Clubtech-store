@@ -2,6 +2,13 @@ import { cache } from 'react';
 import { supabase } from './supabase';
 import type { Categoria, Marca, Producto, ProductoCompleto, Variante } from './types';
 
+// Colores corregidos a mano (la base es de solo lectura): hex del círculo de color oficial de la marca.
+// Clave: slug del producto · nombre del color tal como está en `variantes`.
+const COLOR_REAL: Record<string, string> = {
+  'iphone-17-pro·Blue': '#47537D', // Deep Blue (Apple)
+  'iphone-17-pro-max·Blue': '#47537D',
+};
+
 // El catálogo entero son ~200 filas: lo traemos de una vez y armamos las relaciones acá.
 // Cada página filtra sobre esto, así no hay N consultas por render.
 export const getCatalogo = cache(async () => {
@@ -22,7 +29,12 @@ export const getCatalogo = cache(async () => {
     const marca = marcas.find((x) => x.id === prod.marca_id);
     const categoria = categorias.find((x) => x.id === prod.categoria_id);
     if (!marca || !categoria) return [];
-    const vs = variantes.filter((x) => x.producto_id === prod.id);
+    const vs = variantes
+      .filter((x) => x.producto_id === prod.id)
+      .map((x) => {
+        const hex = COLOR_REAL[`${prod.slug}·${x.color}`];
+        return hex ? { ...x, color_hex: hex } : x;
+      });
     const precios = vs.map((x) => x.precio_usd).filter((x): x is number => x != null);
     return [{ ...prod, marca, categoria, variantes: vs, precioDesde: precios.length ? Math.min(...precios) : null }];
   });

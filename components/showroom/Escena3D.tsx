@@ -157,7 +157,9 @@ function Celular({ mobile }: { mobile: boolean }) {
     // cambio de color en ~0.5s, igual en una compu rápida que en un celular lento
     const kc = 1 - Math.pow(0.004, dt);
     tintes.forEach((m) => m.color.lerp(destino, kc));
-    destinoClaro.copy(destino).lerp(blanco, 0.3);
+    // el vidrio va un tono más claro, salvo en colores oscuros (ej. Deep Blue), donde en el real es casi igual al cuerpo
+    const luz = 0.2126 * destino.r + 0.7152 * destino.g + 0.0722 * destino.b;
+    destinoClaro.copy(destino).lerp(blanco, luz < 0.2 ? 0.04 : 0.3);
     vidrios.forEach((m) => m.color.lerp(destinoClaro, kc));
   });
 
