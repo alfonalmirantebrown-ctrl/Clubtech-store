@@ -111,7 +111,8 @@ export default function Vitrina({ producto }: { producto: ProductoCompleto }) {
             priority
             credito
             sizes="(min-width: 768px) 45vw, 80vw"
-            className="aspect-[4/5] w-full shadow-[0_40px_120px_-30px_rgba(30,127,255,0.35)]"
+            // drop-shadow sigue la silueta del producto recortado (box-shadow dibujaba un recuadro)
+            className="aspect-[4/5] w-full drop-shadow-[0_30px_60px_rgba(30,127,255,0.25)]"
           />
         </motion.div>
       </div>

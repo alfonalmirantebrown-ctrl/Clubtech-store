@@ -253,7 +253,8 @@ Nota: aunque caveman esté activo, las explicaciones a Joaquín siguen siendo en
 - [x] Micro-interacciones custom (showroom 3D, polvo que sigue al mouse, botón magnético, sonido ambiente)
 - [x] Easter egg (tipear "clubh" en cualquier página)
 - [x] Sistema de fotos por archivo (`public/productos`, `public/categorias`, ver `FOTOS.md`)
-- [ ] Subir las fotos reales de Clubtech (61 productos + 7 categorías)
+- [x] Fotos oficiales de las marcas en `public/productos/` (59 de 61, `.webp` transparente; ver `FOTOS.md`)
+- [ ] Fotos que faltan: `moto-g57` y `moto-g06-power` (sin foto oficial publicada) + 7 de categorías
 - [x] Compra por WhatsApp (CTA primary)
 - [ ] Cargar `NEXT_PUBLIC_WHATSAPP_NUMBER` (número de Clubtech) en `.env.local` y en Vercel
 - [x] Isotipo: `public/brand/logo-isotipo.jpeg` (original de Joaquín) → `logo-isotipo.png` con fondo transparente (es el que usa la web)

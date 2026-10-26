@@ -20,6 +20,14 @@ Para poner una foto alcanza con **subir el archivo a la carpeta correcta del rep
 
 **Categorías:** foto de ambiente (puede tener fondo, mesa, luz), horizontal o vertical, al menos 1600 px. Esta sí se recorta para llenar la card y en reposo se ve apagada (en blanco y negro casi); se enciende al pasar el mouse.
 
+## Fotos oficiales cargadas (octubre 2026)
+
+Las fotos de `public/productos/` (`.webp` con fondo transparente) son las fotos de producto que publica cada marca en su sitio oficial, con el ángulo que usa cada una: Apple (store.storeimages.cdn-apple.com y apple.com), Samsung (images.samsung.com), Motorola (tiendas oficiales motorola.com.ar y motorola.com.pe), Xiaomi (mi.com), PlayStation (gmedia.playstation.com), Nintendo (assets.nintendo.com) y Xbox (catálogo de Microsoft). Se recortaron, se les sacó el fondo y se achicaron a 2000 px como máximo.
+
+- Sin foto oficial publicada (quedan con "Foto en camino"): `moto-g57`, `moto-g06-power`.
+- Algunas marcas publican la foto más chica que lo ideal (AirPods, Apple Watch, Motorola ~1000 px). Si Clubtech tiene fotos propias mejores, alcanza con subirlas con el mismo nombre (la de mayor prioridad es la primera en orden alfabético: borrar el `.webp` viejo al subir la nueva).
+- El color de la foto es el que publica la marca; no siempre coincide con todos los colores en stock.
+
 ## Cómo subirlas desde el navegador (sin instalar nada)
 
 1. Entrá al repo en GitHub → carpeta `public/productos` (o `public/categorias`).
@@ -35,82 +43,82 @@ Para poner una foto alcanza con **subir el archivo a la carpeta correcta del rep
 ### Productos (`public/productos/`)
 
 **Celulares · Apple**
-- [ ] iphone-15
-- [ ] iphone-16
-- [ ] iphone-17
-- [ ] iphone-17e
-- [ ] iphone-17-pro
-- [ ] iphone-17-pro-max
-- [ ] iphone-18-pro
-- [ ] iphone-18-pro-max
+- [x] iphone-15
+- [x] iphone-16
+- [x] iphone-17
+- [x] iphone-17e
+- [x] iphone-17-pro
+- [x] iphone-17-pro-max
+- [x] iphone-18-pro
+- [x] iphone-18-pro-max
 
 **Celulares · Samsung**
-- [ ] galaxy-a07
-- [ ] galaxy-a16
-- [ ] galaxy-a17
-- [ ] galaxy-a27
-- [ ] galaxy-a57
-- [ ] galaxy-s25-fe
-- [ ] galaxy-s25-ultra
-- [ ] galaxy-s26
-- [ ] galaxy-s26-plus
-- [ ] galaxy-s26-ultra
-- [ ] galaxy-s26-fe
-- [ ] galaxy-z-flip-8
+- [x] galaxy-a07
+- [x] galaxy-a16
+- [x] galaxy-a17
+- [x] galaxy-a27
+- [x] galaxy-a57
+- [x] galaxy-s25-fe
+- [x] galaxy-s25-ultra
+- [x] galaxy-s26
+- [x] galaxy-s26-plus
+- [x] galaxy-s26-ultra
+- [x] galaxy-s26-fe
+- [x] galaxy-z-flip-8
 
 **Celulares · Motorola**
 - [ ] moto-g06-power
-- [ ] moto-g15
-- [ ] moto-g17
+- [x] moto-g15
+- [x] moto-g17
 - [ ] moto-g57
-- [ ] moto-g86
-- [ ] moto-g86-power
+- [x] moto-g86
+- [x] moto-g86-power
 
 **Celulares · Xiaomi**
-- [ ] redmi-15c
-- [ ] redmi-17
-- [ ] redmi-note-15
-- [ ] redmi-note-15-pro
-- [ ] redmi-note-15-pro-plus
-- [ ] poco-x7-pro
-- [ ] poco-x8-pro
+- [x] redmi-15c
+- [x] redmi-17
+- [x] redmi-note-15
+- [x] redmi-note-15-pro
+- [x] redmi-note-15-pro-plus
+- [x] poco-x7-pro
+- [x] poco-x8-pro
 
 **Tablets**
-- [ ] ipad-a16
-- [ ] ipad-pro-m5
-- [ ] galaxy-tab-a11
-- [ ] galaxy-tab-s10-lite
-- [ ] galaxy-tab-s10-fe
-- [ ] galaxy-tab-s10-fe-plus
-- [ ] galaxy-tab-s11-ultra
+- [x] ipad-a16
+- [x] ipad-pro-m5
+- [x] galaxy-tab-a11
+- [x] galaxy-tab-s10-lite
+- [x] galaxy-tab-s10-fe
+- [x] galaxy-tab-s10-fe-plus
+- [x] galaxy-tab-s11-ultra
 
 **Laptops**
-- [ ] macbook-neo
-- [ ] macbook-pro-m5
-- [ ] macbook-pro-m5-pro
+- [x] macbook-neo
+- [x] macbook-pro-m5
+- [x] macbook-pro-m5-pro
 
 **Smartwatches**
-- [ ] apple-watch-s11
-- [ ] apple-watch-se-3
+- [x] apple-watch-s11
+- [x] apple-watch-se-3
 
 **Consolas**
-- [ ] nintendo-switch-2
-- [ ] playstation-5-digital-slim
-- [ ] playstation-5-standard-slim
-- [ ] playstation-5-pro
-- [ ] playstation-vr2
-- [ ] xbox-series-s
-- [ ] xbox-series-x
+- [x] nintendo-switch-2
+- [x] playstation-5-digital-slim
+- [x] playstation-5-standard-slim
+- [x] playstation-5-pro
+- [x] playstation-vr2
+- [x] xbox-series-s
+- [x] xbox-series-x
 
 **Audio**
-- [ ] airpods-4
-- [ ] airpods-pro-3
-- [ ] airpods-max-2
+- [x] airpods-4
+- [x] airpods-pro-3
+- [x] airpods-max-2
 
 **Accesorios**
-- [ ] apple-pencil
-- [ ] cable-original
-- [ ] cargador-20w-original
-- [ ] cargador-40w-dynamic
-- [ ] joystick-ps5
-- [ ] cargador-samsung-25w
+- [x] apple-pencil
+- [x] cable-original
+- [x] cargador-20w-original
+- [x] cargador-40w-dynamic
+- [x] joystick-ps5
+- [x] cargador-samsung-25w
