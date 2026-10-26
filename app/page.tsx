@@ -1,3 +1,5 @@
+/// <reference types="react-dom/canary" />
+import { preload } from 'react-dom';
 import Vestibulo from '@/components/catalogo/Vestibulo';
 import Cierre from '@/components/showroom/Cierre';
 import Showroom from '@/components/showroom/Showroom';
@@ -9,6 +11,8 @@ import { esOpcion } from '@/lib/variantes';
 export const revalidate = 600;
 
 export default async function Home() {
+  // el celular 3D (2 MB) empieza a bajar junto con la página: cuando three.js llega, el modelo ya está
+  preload('/models/celular.glb', { as: 'fetch', crossOrigin: 'anonymous' });
   const { categorias, productos } = await getCatalogo();
   const salas = categorias.map((categoria) => {
     const items = productos.filter((p) => p.categoria_id === categoria.id);

@@ -1,6 +1,6 @@
 'use client';
 
-import { Environment, Lightformer, useGLTF } from '@react-three/drei';
+import { Environment, Lightformer, Preload, useGLTF } from '@react-three/drei';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { Suspense, useEffect, useMemo, useRef } from 'react';
 import * as THREE from 'three';
@@ -72,7 +72,7 @@ function usePantalla() {
   return tex;
 }
 
-function Celular({ mobile }: { mobile: boolean }) {
+function Celular({ mobile, entrada: conEntrada }: { mobile: boolean; entrada: boolean }) {
   const grupo = useRef<THREE.Group>(null);
   const { scene } = useGLTF(MODELO, false, true);
   const pantalla = usePantalla();
@@ -137,7 +137,7 @@ function Celular({ mobile }: { mobile: boolean }) {
     const t = state.clock.elapsedTime;
     if (nacimiento.current === null) nacimiento.current = t;
     // entrada: el celular aparece girando y crece hasta su lugar (1.6s)
-    const e = Math.min(1, (t - nacimiento.current) / 1.6);
+    const e = conEntrada ? Math.min(1, (t - nacimiento.current) / 1.6) : 1;
     const entrada = 1 - Math.pow(1 - e, 3);
 
     const q = pose(escena.p, mobile);
@@ -222,7 +222,7 @@ function Polvo({ cantidad = 650 }: { cantidad?: number }) {
   );
 }
 
-export default function Escena3D({ mobile, activa }: { mobile: boolean; activa: boolean }) {
+export default function Escena3D({ mobile, activa, entrada }: { mobile: boolean; activa: boolean; entrada: boolean }) {
   return (
     <Canvas
       className="!absolute inset-0"
@@ -243,7 +243,9 @@ export default function Escena3D({ mobile, activa }: { mobile: boolean; activa: 
       <directionalLight position={[-3, 2, 4]} intensity={1.2} color="#dfe9ff" />
       <pointLight position={[0, 0, -2]} intensity={3} color="#dfe5ee" distance={6} />
       <Suspense fallback={null}>
-        <Celular mobile={mobile} />
+        <Celular mobile={mobile} entrada={entrada} />
+        {/* compila los shaders apenas llega el modelo, así el primer cuadro visible no se traba */}
+        <Preload all />
       </Suspense>
       <Polvo cantidad={mobile ? 320 : 650} />
     </Canvas>

@@ -116,7 +116,13 @@ export default function Showroom({ pieza }: Props) {
   );
 
   const c = pieza.colores[color];
-  const mostrar3D = webgl && fase === 'terminada';
+  // la escena 3D se monta enseguida, también durante la intro (queda tapada y quieta):
+  // así, cuando la intro termina o si no hay intro, el celular ya está listo
+  const mostrar3D = webgl;
+  const revelada = fase === 'terminada';
+  // el giro de entrada solo tiene sentido como remate de la intro; sin intro, el celular ya está en su lugar
+  const huboIntro = useRef(false);
+  if (fase === 'corriendo') huboIntro.current = true;
 
   return (
     <section
@@ -149,7 +155,7 @@ export default function Showroom({ pieza }: Props) {
 
         {/* la pieza */}
         {mostrar3D ? (
-          <Escena3D mobile={mobile} activa={activa} />
+          <Escena3D mobile={mobile} activa={activa && revelada} entrada={huboIntro.current} />
         ) : (
           !webgl && (
             <div className="absolute top-1/2 w-[40vmin] -translate-x-1/2 -translate-y-1/2" style={{ left: 'var(--ax)' }}>

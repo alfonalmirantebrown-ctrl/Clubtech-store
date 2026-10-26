@@ -138,6 +138,7 @@ Narrativa scroll de 5 actos dentro de un escenario fijo (`components/showroom/`)
 - Después: Vestíbulo y **Cierre** ("Sin carrito. Sin formulario. Un mensaje y listo." + botón magnético a WhatsApp).
 - Coreografía del celular según el scroll: `lib/escena.ts` (`pose`). Scroll: GSAP ScrollTrigger + Lenis en el mismo ticker (`components/SmoothScroll.tsx`).
 - Fallbacks: sin WebGL → dibujo de línea; `prefers-reduced-motion` → solo el acto 0, sin scroll narrativo.
+- **Carga del celular 3D (que esté desde que entrás, pedido de Joaquín):** `app/page.tsx` precarga `celular.glb` junto con el HTML; la escena se monta enseguida, también detrás de la intro, quieta (`frameloop` en `never`) hasta que la intro termina; `<Preload all />` compila los shaders apenas llega el modelo. El giro de entrada (1,6 s) solo se hace después de la intro; en visitas sin intro el celular ya está en su lugar. `next.config.mjs` cachea `/models/*` una semana: si se reemplaza el modelo, **cambiarle el nombre al archivo**.
 
 ### Nivel 1 · El Vestíbulo (`/`)
 
