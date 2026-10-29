@@ -1,24 +1,51 @@
 'use client';
 
-import { useAnimate } from 'framer-motion';
-import { useEffect, useState } from 'react';
+import { cubicBezier, easeOut } from 'framer-motion';
+import { useEffect, useRef, useState } from 'react';
 import { TypeAnimation } from 'react-type-animation';
 import { setFaseIntro } from '@/lib/intro';
 
 const VISTA = 'ct-intro-vista';
-const espera = (ms: number) => new Promise((r) => setTimeout(r, ms));
+
+/*
+  Reloj de la intro: cuenta solo el tiempo en que la página está viva.
+  Si el navegador se traba (mala conexión, se está armando el 3D) o la pestaña queda en segundo plano,
+  cada cuadro suma como máximo 50 ms: la intro se pausa y sigue desde donde estaba,
+  en vez de "ponerse al día" y saltar al final.
+*/
+const MAX_PASO = 50;
+function correr(ms: number, vivo: () => boolean, alAvanzar: (p: number) => void = () => {}) {
+  return new Promise<void>((resolver) => {
+    let t = 0;
+    let previo: number | null = null;
+    const paso = (ahora: number) => {
+      if (!vivo()) return resolver();
+      if (previo !== null) t += Math.min(ahora - previo, MAX_PASO);
+      previo = ahora;
+      const p = ms > 0 ? Math.min(1, t / ms) : 1;
+      alAvanzar(p);
+      if (p < 1) requestAnimationFrame(paso);
+      else resolver();
+    };
+    requestAnimationFrame(paso);
+  });
+}
+const mezclar = (a: number, b: number, k: number) => a + (b - a) * k;
 
 /*
   Intro cinematográfica, 4 fases (ver CLAUDE.md):
   1 · 0-4s  type-on "CLUBTECH" con error humano (CLUBH → borra → CLUBTECH)
+  (los tiempos son de una conexión normal: cada fase arranca cuando termina la anterior, no por reloj)
   2 · 4-6s  aparece el isotipo de Clubtech y hace zoom 1 → 3.5 (leve, a pedido de Joaquín)
   3 · 6-7s  zoom out 3.5 → 1 y viaja a la nav: es el mismo isotipo que queda ahí, a 32px
   4 · fin   se desmonta; queda el hero con CLUBTECH flotante
   Se ve una vez por sesión: si volvés a la home navegando, no se repite.
 */
 export default function Intro() {
-  const [scope, animate] = useAnimate<HTMLDivElement>();
+  const scope = useRef<HTMLDivElement>(null);
   const [fase, setFase] = useState<0 | 1 | 2 | 3 | 4>(0);
+  // se resuelve cuando el tipeo de CLUBTECH llega al final (aunque la página se haya trabado en el medio)
+  const finTipeo = useRef<() => void>(() => {});
 
   useEffect(() => {
     let vista = false;
@@ -36,20 +63,31 @@ export default function Intro() {
     setFase(1);
 
     let cancelado = false;
+    const vivo = () => !cancelado;
+    const tipeado = new Promise<void>((r) => (finTipeo.current = r));
+
     (async () => {
-      await espera(4000);
-      if (cancelado) return;
+      // fase 1: el tipeo marca el ritmo; después, la pausa con el cursor titilando
+      await tipeado;
+      await correr(1350, vivo);
+      if (cancelado || !scope.current) return;
       setFase(2);
       const logo = scope.current.querySelector<HTMLElement>('[data-logo]')!;
       const fondo = scope.current.querySelector<HTMLElement>('[data-fondo]')!;
+      const e = { x: 0, y: 0, s: 1 };
+      const pintar = () => (logo.style.transform = `translate(${e.x}px, ${e.y}px) scale(${e.s})`);
 
-      await animate(logo, { opacity: [0, 1], scale: 1 }, { duration: 0.45, ease: 'easeOut' });
+      // aparece
+      await correr(450, vivo, (p) => (logo.style.opacity = String(easeOut(p))));
       logo.style.willChange = 'transform';
-      await animate(logo, { scale: 3.5 }, { duration: 1.55, ease: [0.7, 0, 0.84, 0] });
+      // zoom in leve
+      const entra = cubicBezier(0.7, 0, 0.84, 0);
+      await correr(1550, vivo, (p) => ((e.s = mezclar(1, 3.5, entra(p))), pintar()));
       if (cancelado) return;
 
       setFase(3);
-      await animate(logo, { scale: 1 }, { duration: 0.5, ease: [0.16, 1, 0.3, 1] });
+      const sale = cubicBezier(0.16, 1, 0.3, 1);
+      await correr(500, vivo, (p) => ((e.s = mezclar(3.5, 1, sale(p))), pintar()));
 
       // Viaje hasta el hueco del isotipo en la nav
       const slot = document.getElementById('nav-isotipo-slot')?.getBoundingClientRect();
@@ -58,12 +96,20 @@ export default function Intro() {
         ? {
             x: slot.left + slot.width / 2 - (r.left + r.width / 2),
             y: slot.top + slot.height / 2 - (r.top + r.height / 2),
-            scale: slot.height / r.height,
+            s: slot.height / r.height,
           }
-        : { x: 0, y: 0, scale: 0.1 };
-      animate(fondo, { opacity: 0 }, { duration: 0.5 });
+        : { x: 0, y: 0, s: 0.1 };
+      const viaje = cubicBezier(0.65, 0, 0.35, 1);
       // es el mismo logo que vive en la nav: llega a su lugar y la nav lo toma sin corte
-      await animate(logo, destino, { duration: 0.55, ease: [0.65, 0, 0.35, 1] });
+      await correr(550, vivo, (p) => {
+        fondo.style.opacity = String(1 - Math.min(1, (p * 550) / 500));
+        const k = viaje(p);
+        e.x = mezclar(0, destino.x, k);
+        e.y = mezclar(0, destino.y, k);
+        e.s = mezclar(1, destino.s, k);
+        pintar();
+      });
+      if (cancelado) return;
       logo.style.willChange = '';
 
       try {
@@ -76,7 +122,7 @@ export default function Intro() {
     return () => {
       cancelado = true;
     };
-  }, [animate, scope]);
+  }, []);
 
   if (fase === 4) return null;
 
@@ -87,7 +133,7 @@ export default function Intro() {
       {fase === 1 && (
         <div className="absolute inset-0 grid place-items-center px-5">
           <TypeAnimation
-            sequence={[400, 'CLUBH', 380, 'CLUB', 260, 'CLUBTECH']}
+            sequence={[400, 'CLUBH', 380, 'CLUB', 260, 'CLUBTECH', () => finTipeo.current()]}
             speed={{ type: 'keyStrokeDelayInMs', value: 165 }}
             deletionSpeed={{ type: 'keyStrokeDelayInMs', value: 110 }}
             cursor

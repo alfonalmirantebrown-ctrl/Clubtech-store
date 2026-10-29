@@ -106,6 +106,7 @@ apple, samsung, xiaomi, motorola, sony (PlayStation), nintendo, microsoft (Xbox)
 - **Fase 1 (0-4s):** type-on "CLUBTECH" con error humano (tipea CLUBH, borra H, sigue CLUBTECH). Font display 160px desktop.
 - **Fase 2 (4-6s):** aparece el **isotipo** de Clubtech (`/public/brand/logo-isotipo.png`), zoom in leve de scale 1 → 3.5 (antes 8; Joaquín lo quiso más sutil). (Decisión de Joaquín: el zoom se hace con el isotipo, no con el nombre.)
 - **Fase 3 (6-7s):** zoom out scale 3.5 → 1 y el mismo isotipo viaja a la nav, donde queda a 32px (transición continua, sin fundido).
+- **La intro no se apura** (pedido de Joaquín): cada fase arranca cuando termina la anterior (el zoom espera a que termine el tipeo) y las animaciones usan un reloj propio en `Intro.tsx` que se pausa si la página se traba (mala conexión, se arma el 3D): sigue desde donde estaba, no salta al final.
 - **Fase 4 (permanente):** "CLUBTECH" flotante en hero home, cada letra con loop sutil translateY ±3px asíncrono. Debajo: "— TU PRÓXIMA PIEZA DE TECNOLOGÍA EMPIEZA ACÁ" en mono, con "STORE · ARGENTINA" + "STORE" en `--blue-tech`.
 
 ### Micro-interacción pendiente: Glitch RGB sutil
