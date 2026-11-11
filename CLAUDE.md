@@ -2,6 +2,28 @@
 
 Este archivo lo lee Claude Code automáticamente al abrir el proyecto. Contiene todo el contexto que necesita para no preguntar lo mismo cada vez.
 
+## Cómo trabajamos: un chat por página
+
+Joaquín abre un chat de Claude Code distinto para cada página de la web. Todos comparten el contexto a través de **este archivo** y del historial de git, así que:
+
+1. **Al empezar:** leer este archivo entero (ya se carga solo) y, si el pedido toca algo ya trabajado, mirar `git log --oneline -20` en la rama principal para ver qué se hizo y por qué.
+2. **Al terminar cada cambio:** anotar acá toda decisión nueva de Joaquín (qué quiere, qué no quiere y por qué) en la sección que corresponda, y sumar una línea a la **Bitácora** (abajo de todo). Lo que no quede escrito acá, el próximo chat no lo sabe.
+3. **Siempre unir a la rama principal** (`claude/clubtech-store-setup-h0f3o3`) cuando Joaquín apruebe el cambio: los chats nuevos arrancan desde ahí. Una rama que no se une es contexto que se pierde.
+4. Si un pedido de una página pisa una decisión de otra (ej. tipografía, colores, textos), avisarle a Joaquín antes de cambiarla.
+
+### Mapa: qué archivos son de cada página
+
+| Página | Ruta | Archivos principales |
+|---|---|---|
+| Home: intro (tipeo + isotipo) | `/` | `components/hero/Intro.tsx`, `components/hero/FloatingWord.tsx`, `lib/intro.ts` |
+| Home: celular 3D y scroll | `/` | `components/showroom/Showroom.tsx`, `components/showroom/Escena3D.tsx`, `lib/escena.ts`, `public/models/celular.glb` |
+| Home: categorías y cierre | `/` | `components/catalogo/Vestibulo.tsx`, `components/showroom/Cierre.tsx`, `app/page.tsx` |
+| Categoría (marcas) | `/catalogo/[categoria]` | `app/catalogo/[categoria]/page.tsx`, `components/catalogo/GaleriaMarcas.tsx` |
+| Marca (lista de productos) | `/catalogo/[categoria]/[marca]` | `app/catalogo/[categoria]/[marca]/page.tsx`, `components/catalogo/Estante.tsx`, `components/catalogo/ProductoCard.tsx` |
+| Producto | `/producto/[slug]` | `app/producto/[slug]/page.tsx`, `components/catalogo/Vitrina.tsx`, `components/ProductoVisual.tsx` |
+| En todas | — | `components/Nav.tsx`, `components/Footer.tsx`, `app/layout.tsx`, `app/globals.css` |
+| Datos y fotos | — | `lib/catalogo.ts` (Supabase + `COLOR_REAL`), `lib/fotos.ts`, `public/productos/`, `FOTOS.md` |
+
 ## El proyecto
 
 Clubtech Store es un e-commerce premium de tecnología para Argentina. Venden celulares, tablets, laptops, smartwatches, consolas, audio y accesorios. Público: compradores argentinos de tech que valoran lo premium.
@@ -276,3 +298,15 @@ Nota: aunque caveman esté activo, las explicaciones a Joaquín siguen siendo en
 - No es dev profundo → explicar errores en castellano claro, no asumir conocimiento técnico
 - Rioplatense cercano → tono amable pero directo, no formal
 - Si algo no se puede implementar, decir CLARO qué y por qué, no asumir que lo entiende por default.
+
+## Bitácora
+
+Una línea por cambio pedido por Joaquín (la más nueva arriba). Para el detalle: `git log` en la rama principal.
+
+- 2026-11-11 · Se arma el trabajo "un chat por página": sección de arriba con reglas y mapa de archivos, y esta bitácora.
+- 2026-10-29 · La intro ya no se apura si la página se traba: sigue desde donde quedó (`Intro.tsx`).
+- 2026-10-29 · Botón de WhatsApp de la nav: en la home aparece recién al llegar al catálogo.
+- 2026-10-26 · Celular 3D listo desde que entrás (precarga del modelo, se arma detrás de la intro, sin giro de entrada en visitas siguientes).
+- 2026-10-26 · Azul real del iPhone 17 Pro (Deep Blue `#47537D`) en todo el sitio y en el 3D.
+- 2026-10-26 · Zoom del isotipo más leve (8 → 3.5) y fuera contadores y frases poéticas.
+- 2026-10-26 · Fotos oficiales de las marcas: 59 de 61 productos (`FOTOS.md`); la vitrina usa sombra que sigue la silueta.
